@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Evolution of Creativity — The Beginning of Infinity</title>
+<style>@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-500.woff2) format("woff2")}@font-face{font-family:Manrope;font-style:normal;font-weight:400 500;font-display:swap;src:url(fonts/manrope-var.woff2) format("woff2")}#d3{height:44px}p.pr16{white-space:nowrap;color:var(--ink);margin:0 0 -6px;line-height:1.3;letter-spacing:.12em}@media(max-width:389px){p.pr16{letter-spacing:.06em;font-size:10px}}</style>
+<style>
+:root{--paper:#f3eee4;--ink:#1c1914;--mute:rgba(28,25,20,.5);--rule:rgba(28,25,20,.16)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto 1fr auto;min-height:100vh}
+.sm{font:500 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+button{font-family:Manrope,sans-serif;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}
+/* chapter rail */
+#rail{grid-row:1/4;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;padding:22px 0;gap:4px}
+#rail .menu{width:32px;height:32px;margin-bottom:14px;display:grid;place-items:center}
+#rail .menu i{display:block;width:16px;height:1px;background:var(--ink);box-shadow:0 5px 0 var(--ink),0 -5px 0 var(--ink)}
+#rail a{display:block;font:400 10px/1 Manrope,sans-serif;color:var(--mute);text-decoration:none;padding:5px 0;width:100%;text-align:center;letter-spacing:.06em}
+#rail a .rt{display:none}#rail a.live{color:var(--ink);font-weight:500;position:relative}#rail a.live:before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;background:var(--ink)}
+#drawer{position:fixed;inset:0 auto 0 0;width:min(340px,86vw);background:var(--paper);border-right:1px solid var(--ink);padding:28px 28px;transform:translateX(-102%);transition:transform .35s ease;z-index:20;overflow:auto}
+#drawer.open{transform:none;box-shadow:0 0 60px rgba(28,25,20,.12)}
+#drawer ol{list-style:none;margin:22px 0 0;padding:0}
+#drawer li a{color:inherit;text-decoration:none;display:contents}#drawer li{display:grid;grid-template-columns:28px 1fr;padding:9px 0;border-bottom:1px solid var(--rule);font:500 1.12rem/1.2 "Cormorant Garamond",serif;color:var(--mute)}
+#drawer li b{font:400 10px/2.2 Manrope,sans-serif}
+#drawer li.live{color:var(--ink)}#drawer li.live span:after{content:" ·  reading";font:500 9px Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+#drawer .x{float:right;font-size:20px;line-height:1}
+#scrim{position:fixed;inset:0;background:rgba(28,25,20,.08);opacity:0;pointer-events:none;transition:.3s;z-index:19}#scrim.on{opacity:1;pointer-events:auto}
+/* header + index */
+header{padding:22px 6vw 0;display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+header .t{color:var(--mute)}
+#idx{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+#idx button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:6px 0;border-bottom:1px solid transparent}
+#idx button.on{color:var(--ink);border-color:var(--ink)}
+#idx em{font-style:normal;margin-right:6px}
+/* stage */
+main{position:relative;padding:4vh 6vw 2vh;display:grid;align-items:center}
+.sec{display:none;grid-template-columns:.9fr 1.1fr;gap:5vw;align-items:center;animation:in .45s ease}
+.sec.on{display:grid}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.arg{display:grid;gap:22px;align-content:center;max-width:30em}
+h1,h2{margin:0;font-weight:500;text-transform:uppercase;letter-spacing:.015em;line-height:.92}
+h1{font-size:clamp(2.5rem,4.6vw,4.8rem)}h2{font-size:clamp(2rem,3.2vw,3.3rem)}
+h1 span,h2 span{display:block}
+.kick{color:var(--mute)}
+p.c{font:400 16px/1.55 Manrope,sans-serif;color:var(--mute);margin:0}
+p.c b{color:var(--ink);font-weight:500}
+.fg{position:relative;min-height:0}
+.fg svg{width:100%;height:auto;display:block;max-height:62vh}
+.cap{margin-top:10px;color:var(--mute);text-align:right}
+/* controls */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font:400 15px/1.35 Manrope,sans-serif;text-align:left;border:1px solid var(--rule);padding:13px 15px;border-radius:2px}
+.opt:hover{border-color:var(--ink)}.opt.on{border-color:var(--ink);background:rgba(28,25,20,.04)}
+.row{flex-direction:row;flex-wrap:wrap}.row .opt{padding:10px 14px}
+.begin{justify-self:start;font:500 12px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);padding:14px 18px}
+.begin:hover{background:var(--ink);color:var(--paper)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;background:none;height:28px;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);margin-top:-9px}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink)}
+.ticks{display:flex;justify-content:space-between;color:var(--mute);margin-top:4px}
+.read{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font:400 14px/1.4 Manrope,sans-serif;border-top:1px solid var(--rule);padding-top:14px}
+.read dt{color:var(--mute)}.read dd{margin:0}
+/* trial */
+.trial{font:400 16px/1.5 Manrope,sans-serif;min-height:240px;max-width:30em;margin-left:auto;width:100%}
+.crit{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--rule);opacity:0;transform:translateX(12px);transition:.45s}
+.crit.show{opacity:1;transform:none}.mark{font-weight:500}
+.verdict{margin-top:20px;font:500 1.9rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.03em;opacity:0;transition:.4s}.verdict.show{opacity:1}
+/* 3d */
+.orb{position:relative;aspect-ratio:4/3;width:100%}
+.orb canvas{width:100%!important;height:100%!important;display:block}
+.orb .lab{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;color:var(--mute);pointer-events:none;font-size:10px}
+.orb #lPeri{transform:translate(-30%,-50%)}#fb{display:none}.orb.fallback canvas,.orb.fallback .lab{display:none}.orb.fallback #fb{display:block}
+#fb .fbE .ring{stroke-width:1}#fb .fbE text{opacity:.35}
+#fb .fbE.on .ring{stroke-width:2.6}#fb .fbE.on text{opacity:1;font-weight:500}
+/* stamp */
+.toggle{display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);border-radius:2px;justify-self:start}
+.toggle button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:13px 18px}
+.toggle button.on{background:var(--ink);color:var(--paper)}
+#stamp text{transition:opacity .4s}
+/* cases + people */
+.case-fig svg{max-height:52vh}
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.people .opt{font-size:14px;padding:11px 12px}
+.card{border:1px solid var(--ink);padding:34px 36px;max-width:440px;margin-left:auto;background:var(--paper);box-shadow:0 14px 40px rgba(28,25,20,.08)}
+.card h3{margin:0 0 8px;font:500 2.2rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.02em}
+.card .d{color:var(--mute);margin-bottom:18px}
+.card p{font:400 16px/1.6 Manrope,sans-serif;margin:0}
+/* footer nav */
+footer{padding:0 6vw 26px;display:flex;align-items:center;gap:20px}
+footer .prog{flex:1;display:flex;gap:6px}footer .prog i{flex:1;height:1px;background:var(--rule)}footer .prog i.on{height:2px;background:var(--ink)}
+footer button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:12px 0}
+footer button:disabled{opacity:.25;cursor:default}
+footer .cnt{color:var(--mute);min-width:42px;text-align:center}
+@media(max-width:820px){
+ body{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto}
+ #rail{grid-row:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--rule);padding:10px 5vw;justify-content:flex-start;gap:12px}
+ #rail a{display:block;display:none}#rail a.live .rt{display:inline;margin-left:8px}#rail a.live{display:block;width:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding-left:10px}
+ #rail .menu{margin:0}
+ header{padding:14px 6vw 0}header .t{display:none}
+ #idx{gap:0;width:100%;justify-content:space-between}#idx span{display:none}#idx em{margin:0}#idx button{padding:8px 10px}
+ main{padding:18px 6vw 10px;align-items:start}
+ .sec{grid-template-columns:1fr;gap:20px}
+ .arg{gap:14px}
+ h1{font-size:2.5rem}h2{font-size:2rem}
+ .fg svg{max-height:none}
+ .trial{min-height:0;margin:0}
+ .people{grid-template-columns:repeat(2,1fr)}
+ .card{margin:0;padding:24px}
+ footer{position:sticky;bottom:0;background:var(--paper);padding:10px 6vw 16px;border-top:1px solid var(--rule)}
+ /* figure above control on phone for 3D */
+ .s3d .fg{order:-1}
+}
+
+.orb{position:relative;aspect-ratio:4/3;width:100%;max-height:62vh}
+.orb.fallback{aspect-ratio:auto;max-height:none!important}
+.orb .fb{display:none}.orb.fallback canvas,.orb.fallback .lab{display:none}.orb.fallback .fb{display:block}.orb .fb svg{width:100%;height:auto;max-height:62vh}
+.hero3d{cursor:grab}
+.vd{font:500 1.35rem/1.15 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.03em;margin:0;color:var(--ink)}
+.case-fg{display:grid;gap:8px;justify-items:end}.case-fg svg{width:100%;height:auto;max-height:52vh}.case-fg [hidden],.cstx[hidden]{display:none}
+.src{color:var(--mute);text-align:right;letter-spacing:.08em;text-transform:none;font-size:11px;line-height:1.4}
+.n{border-bottom:1px dotted var(--ink);cursor:pointer;position:relative}
+#note{position:fixed;left:50%;bottom:5vh;transform:translate(-50%,20px);max-width:440px;width:88vw;background:var(--paper);border:1px solid var(--ink);padding:20px 22px;font:400 14px/1.55 Manrope,sans-serif;opacity:0;pointer-events:none;transition:.3s;box-shadow:0 10px 30px rgba(28,25,20,.12);z-index:30}
+#note.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#note h3{margin:0 0 4px;font:500 1.5rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.02em}
+#note .d{color:var(--mute);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+footer a.ch{font:500 11px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:12px 0;color:var(--ink);text-decoration:none}
+footer a.ch[hidden],footer button[hidden]{display:none}
+#drawer .home{display:block;margin-top:18px;font:500 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);text-decoration:none}
+header a{color:inherit;text-decoration:none}
+/* v2 hands-on pieces, unchanged, scoped */
+#ix{font:400 15px/1.5 Manrope,sans-serif;display:grid;gap:16px;min-width:0;width:100%}
+#ix svg{width:100%;height:auto;display:block}
+#ix label{display:grid;gap:6px;font:500 12px/1.2 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#ix button{font:400 15px/1.3 Manrope,sans-serif;text-align:left;border:1px solid var(--rule);padding:12px 15px;border-radius:2px}
+#ix button:hover{border-color:var(--ink)}#ix button.on{border-color:var(--ink);background:rgba(28,25,20,.04)}
+#ix .q{font:500 15px/1.4 Manrope,sans-serif;margin:0 0 14px}#ix .guesses{display:flex;flex-direction:column;gap:10px}
+#ix .trial{font:400 15px/1.5 Manrope,sans-serif;min-height:120px;margin:0;max-width:none}
+#ix .verdict{margin-top:16px;font:500 13px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;opacity:0;transition:.4s}#ix .verdict.show{opacity:1}
+.ctl{display:grid;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+#ix .row{display:flex;flex-wrap:wrap;gap:10px}.out{margin:0;min-height:1.5em}.big{font:500 2rem/1.1 "Cormorant Garamond",serif;letter-spacing:.06em;margin:0}
+#ix .bar{height:3px;background:var(--rule);flex:none;display:block}#ix .bar i{display:block;height:3px;background:var(--ink);width:0;transition:width .4s}
+.rooms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}.rooms li{border:1px solid var(--rule);padding:8px;display:grid;font-size:13px}.rooms b{font-weight:500;font-size:11px;color:var(--mute)}
+.voters{display:grid;gap:8px}.voters div{display:grid;grid-template-columns:5.5em 1fr auto;align-items:center;gap:10px}.voters b{font-weight:500}#ix .voters button{padding:8px 12px;font-size:13px}
+.rec{margin:0;padding:0;list-style:none;display:grid;gap:6px}.rec li{display:grid;grid-template-columns:5.5em 1fr;gap:10px;padding:6px 0;border-bottom:1px solid var(--rule)}.rec .who{color:var(--mute);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.rec b{font-weight:500;text-decoration:underline}
+.lin{margin:0;padding-left:1.4em;font-family:ui-monospace,Menlo,monospace;letter-spacing:.12em}.lin b{text-decoration:underline}
+.doors{display:flex;gap:8px;flex-wrap:wrap}.doors svg{width:30px}
+.stamp{display:inline-block;justify-self:start;border:2px solid var(--ink);padding:8px 14px;font:500 13px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+#ix button.pic{padding:6px;justify-self:start}#ix button.pic svg{width:160px}button:disabled{opacity:.35;cursor:default}
+#ix .fig{cursor:pointer}
+button:focus-visible,a:focus-visible,.n:focus-visible,svg:focus-visible,#ix .fig:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media(max-width:820px){
+ #rail a.live{display:block}
+ input[type=range]{height:44px}#ix button,.opt,footer button,footer a.ch,#idx button,#rail .menu,.begin,#drawer .x,#drawer li a,#drawer .home,.toggle button{min-height:44px;min-width:44px}
+ .s3d .arg{gap:10px}.s3d .arg .kick{display:none}.s3d .arg>p.c:not(.vd-c){order:9}
+ .s3d .orb,.s3d .orb .fb svg{max-height:34vh;margin:0 auto}.s3d .orb{width:auto;max-width:100%}
+ .s1h .arg{order:-1}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* real 44px boxes, layout unchanged: padding grows the box, an equal negative margin gives the space back */
+#drawer li a{display:grid;grid-column:1/-1;grid-template-columns:28px 1fr;padding:11px 0;margin:-2px 0}#drawer li{padding:0}
+#drawer .x{width:44px;height:44px;display:grid;place-items:center;margin:-12px -14px 0 0}
+#drawer .home{padding:17px 0;margin:1px 0 -17px}
+.n{border-bottom:0;padding:12px 6px;margin:0 -6px;min-width:44px;min-height:44px}.n::before{content:'';position:absolute;left:6px;right:6px;bottom:11px;border-bottom:1px dotted var(--ink);pointer-events:none}
+.begin{position:relative;border-color:transparent;border-width:0;padding:16px 19px;margin-block:-1px}.begin::before{content:'';position:absolute;inset:1px 0;border:1px solid var(--ink);pointer-events:none}
+.toggle button{padding-top:16.5px;padding-bottom:16.5px;margin-block:-3.5px}.toggle button.on{background:linear-gradient(var(--ink),var(--ink)) center/100% calc(100% - 7px) no-repeat}
+footer a.ch{padding-left:7px;padding-right:7px;margin-inline:-7px}footer a#nc{text-align:right}
+@media(max-width:820px){#rail .menu{width:44px;min-width:44px;flex:none;margin:0 -6px}#rail a.live{padding-top:16.5px;padding-bottom:16.5px;margin-block:-11.5px}#rail a.live:before{top:13.5px;bottom:13.5px}#idx button{padding-left:15px;padding-right:15px;margin-inline:-5px}#idx button.on{border-color:transparent;background:linear-gradient(var(--ink),var(--ink)) bottom center/calc(100% - 10px) 1px no-repeat;background-origin:border-box}}
+/* 44px hit areas without visual change */
+
+header{position:relative;z-index:2}
+.begin,#rail .menu,#idx button,.people .opt,footer a.ch,footer button,#cs .opt,.n{position:relative}
+.begin::after,#rail .menu::after,#idx button::after,.people .opt::after,footer a.ch::after,footer button::after,#cs .opt::after{content:'';position:absolute;left:50%;top:50%;width:max(100%,48px);height:max(100%,48px);transform:translate(-50%,-50%)}
+/* short landscape: phone pattern, current chapter + 44px menu, drawer navigates */
+@media(max-height:500px) and (min-width:821px){#rail a:not(.live){display:none}#rail .menu{width:44px;height:44px;flex:none;margin:-6px 0 -4px}#rail .menu::after{display:none}#rail .menu:focus-visible{outline:0}#rail .menu:focus-visible::after{display:block;width:32px;height:32px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}#rail a.live{padding:17px 0}#rail a.live:before{top:14px;bottom:14px}#rail a.live:focus-visible{outline:0}#rail a.live:focus-visible::after{content:"";position:absolute;left:0;right:0;top:12px;bottom:12px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}}
+/* tap pass 2: 44px hit areas at 821px and wider (layout unchanged except ch-13 voter buttons, 35px to 44px tall as on phones) */
+header .t a{position:relative}header .t a::after{content:"";position:absolute;left:0;right:0;top:50%;height:48px;transform:translateY(-50%)}
+@media(min-width:821px){input[type=range]{height:44px;margin:-8px 0;vertical-align:-8px}#ix .voters button{min-height:44px}}
+/* touch screens 821px and wider: same rail as short landscape (current chapter + 44px menu, drawer navigates) */
+@media(pointer:coarse) and (min-width:821px){#rail a:not(.live){display:none}#rail .menu{width:44px;height:44px;flex:none;margin:-6px 0 -4px}#rail .menu::after{display:none}#rail .menu:focus-visible{outline:0}#rail .menu:focus-visible::after{display:block;width:32px;height:32px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}#rail a.live{padding:17px 0}#rail a.live:before{top:14px;bottom:14px}#rail a.live:focus-visible{outline:0}#rail a.live:focus-visible::after{content:"";position:absolute;left:0;right:0;top:12px;bottom:12px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}}
+/* tap pass 3 (Steve 18 Oct): drawer rows are full 44px hit boxes with no overlap (the row rule moves onto the link); desktop rail links get a 24px-tall hit area, no visual change */
+#drawer li{border-bottom:0}#drawer li a{margin:0;min-height:44px;border-bottom:1px solid var(--rule)}
+@media(min-width:821px) and (min-height:501px) and (pointer:fine){#rail a{position:relative}#rail a::after{content:"";position:absolute;left:0;right:0;top:-2px;bottom:-2px}}
+/* tap pass 4 (QC 17743d81 P1, Steve: inline terms exempt from 44px, no overlap): a term's hit padding is clipped at the midpoint to any neighbouring term (set by the nfit script below via --nt/--nr/--nb/--nl; r5: the vertical defaults are 0, so stacked terms don't overlap before the first fit; the horizontal 6px stays, because a 0 inline padding lets Chromium kern the term into the word before it and the glyphs would shift 1px); text layout, underline and focus ring stay where they were */
+.n{padding:var(--nt,0px) var(--nr,6px) var(--nb,0px) var(--nl,6px);margin:0 calc(-1*var(--nr,6px)) 0 calc(-1*var(--nl,6px))}
+.n::before{bottom:calc(var(--nb,0px) - 1px);left:var(--nl,6px);right:var(--nr,6px)}
+.n:not(.nm):focus-visible{outline:0}
+.n:not(.nm):focus-visible::after{content:"";position:absolute;top:calc(var(--nt,0px) - 12px);bottom:calc(var(--nb,0px) - 12px);left:calc(var(--nl,6px) - 6px);right:calc(var(--nr,6px) - 6px);outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}
+/* found by the full sweep: at 821px+ the header title's 48px hit area (rule2) overlapped the section-index buttons' 48px hit areas by ~11px; split at the midpoint (title 44px tall, index buttons 45px) */
+@media(min-width:821px){header .t a::after{top:-20px;bottom:-9px;height:auto;transform:none}#idx button::after{top:-9px;bottom:-12px;height:auto;transform:translateX(-50%)}}
+/* found by the full sweep: at short landscape the "Begin" button's 48px hit area reached 1.7px into the footer link's; the button is already 44px tall, so its hit area is just its box */
+.begin::after{height:max(100%,44px)}
+/* r6 (QC f193bd40 P2): restored from 1f17. The footer is sticky at 820px and narrower in every chapter, so anything scrolled into view (including keyboard focus) stops above it (footer 71px + 8px). ch-07's #pad keeps its own scroll-margin as well */
+@media(max-width:820px){html{scroll-padding-bottom:79px}}
+</style></head><body>
+<nav id="rail" aria-label="Chapters">
+<button class="menu" id="menuBtn" aria-label="All chapters" aria-expanded="false"><i></i></button>
+<a href="ch-01.html" title="1 · The Reach of Explanations"><span class="rn">01</span><span class="rt"></span></a><a href="ch-02.html" title="2 · Closer to Reality"><span class="rn">02</span><span class="rt"></span></a><a href="ch-03.html" title="3 · The Spark"><span class="rn">03</span><span class="rt"></span></a><a href="ch-04.html" title="4 · Creation"><span class="rn">04</span><span class="rt"></span></a><a href="ch-05.html" title="5 · The Reality of Abstractions"><span class="rn">05</span><span class="rt"></span></a><a href="ch-06.html" title="6 · The Jump to Universality"><span class="rn">06</span><span class="rt"></span></a><a href="ch-07.html" title="7 · Artificial Creativity"><span class="rn">07</span><span class="rt"></span></a><a href="ch-08.html" title="8 · A Window on Infinity"><span class="rn">08</span><span class="rt"></span></a><a href="ch-09.html" title="9 · Optimism"><span class="rn">09</span><span class="rt"></span></a><a href="ch-10.html" title="10 · A Dream of Socrates"><span class="rn">10</span><span class="rt"></span></a><a href="ch-11.html" title="11 · The Multiverse"><span class="rn">11</span><span class="rt"></span></a><a href="ch-12.html" title="12 · A Physicist&#x27;s History of Bad Philosophy"><span class="rn">12</span><span class="rt"></span></a><a href="ch-13.html" title="13 · Choices"><span class="rn">13</span><span class="rt"></span></a><a href="ch-14.html" title="14 · Why Are Flowers Beautiful?"><span class="rn">14</span><span class="rt"></span></a><a href="ch-15.html" title="15 · The Evolution of Culture"><span class="rn">15</span><span class="rt"></span></a><a href="ch-16.html" class=live aria-current=page title="16 · The Evolution of Creativity"><span class="rn">16</span><span class="rt">The Evolution of Creativity</span></a><a href="ch-17.html" title="17 · Unsustainable"><span class="rn">17</span><span class="rt"></span></a><a href="ch-18.html" title="18 · The Beginning"><span class="rn">18</span><span class="rt"></span></a>
+</nav>
+<div id="scrim"></div>
+<aside id="drawer" aria-label="All chapters"><button class="x" id="closeBtn" aria-label="Close">×</button><div class="sm kick">The Beginning of Infinity</div><ol><li class=""><a href="ch-01.html"><b>01</b><span>The Reach of Explanations</span></a></li><li class=""><a href="ch-02.html"><b>02</b><span>Closer to Reality</span></a></li><li class=""><a href="ch-03.html"><b>03</b><span>The Spark</span></a></li><li class=""><a href="ch-04.html"><b>04</b><span>Creation</span></a></li><li class=""><a href="ch-05.html"><b>05</b><span>The Reality of Abstractions</span></a></li><li class=""><a href="ch-06.html"><b>06</b><span>The Jump to Universality</span></a></li><li class=""><a href="ch-07.html"><b>07</b><span>Artificial Creativity</span></a></li><li class=""><a href="ch-08.html"><b>08</b><span>A Window on Infinity</span></a></li><li class=""><a href="ch-09.html"><b>09</b><span>Optimism</span></a></li><li class=""><a href="ch-10.html"><b>10</b><span>A Dream of Socrates</span></a></li><li class=""><a href="ch-11.html"><b>11</b><span>The Multiverse</span></a></li><li class=""><a href="ch-12.html"><b>12</b><span>A Physicist&#x27;s History of Bad Philosophy</span></a></li><li class=""><a href="ch-13.html"><b>13</b><span>Choices</span></a></li><li class=""><a href="ch-14.html"><b>14</b><span>Why Are Flowers Beautiful?</span></a></li><li class=""><a href="ch-15.html"><b>15</b><span>The Evolution of Culture</span></a></li><li class="live"><a href="ch-16.html"><b>16</b><span>The Evolution of Creativity</span></a></li><li class=""><a href="ch-17.html"><b>17</b><span>Unsustainable</span></a></li><li class=""><a href="ch-18.html"><b>18</b><span>The Beginning</span></a></li></ol><a class="home" href="index.html">← The scroll</a></aside>
+<header><div class="sm t"><a href="index.html">The Beginning of Infinity</a> · Chapter 16 · The Evolution of Creativity</div>
+<ol id="idx"></ol></header>
+<main>
+<section class="sec s1h" id="s1" data-t="The idea">
+<div class="arg"><div class="sm kick">Chapter 16 · The Evolution of Creativity</div><h1><span>First we copied</span><span>then we</span><span>broke out</span></h1><p class="c">Creativity first evolved to copy memes faithfully; breaking out of that copying makes progress possible.</p><button class="begin" data-go="2">Begin →</button></div>
+<div class="fg"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" fill="none" stroke="#1c1914" stroke-linecap="round" stroke-linejoin="round" aria-label="A hand tapping an egg on a bowl rim, copied by a second hand that must guess why: thumb on top, fingers curled under"><path d="M30 300Q100 390 170 300" stroke-width="1.5"/><ellipse cx="100" cy="300" rx="70" ry="11" stroke-width="1.1"/><clipPath id="h16-cb100"><path d="M30 300Q100 390 170 300Z"/></clipPath><g clip-path="url(#h16-cb100)" stroke-width="0.5" opacity="0.6"><path d="M145.6 227.2L197.8 370.6"/><path d="M142.3 228.4L194.5 371.8"/><path d="M139.0 229.6L191.3 373.0"/><path d="M135.8 230.8L188.0 374.2"/><path d="M132.5 232.0L184.7 375.4"/><path d="M129.2 233.2L181.4 376.6"/><path d="M125.9 234.3L178.1 377.8"/><path d="M122.6 235.5L174.8 379.0"/><path d="M119.3 236.7L171.5 380.2"/><path d="M116.0 237.9L168.2 381.4"/><path d="M112.7 239.1L164.9 382.6"/><path d="M109.4 240.3L161.7 383.8"/><path d="M106.2 241.5L158.4 385.0"/><path d="M102.9 242.7L155.1 386.2"/><path d="M99.6 243.9L151.8 387.4"/><path d="M96.3 245.1L148.5 388.6"/><path d="M93.0 246.3L145.2 389.8"/><path d="M89.7 247.5L141.9 391.0"/><path d="M86.4 248.7L138.6 392.2"/><path d="M83.1 249.9L135.3 393.4"/><path d="M79.8 251.1L132.1 394.6"/><path d="M76.6 252.3L128.8 395.8"/><path d="M73.3 253.5L125.5 397.0"/><path d="M70.0 254.7L122.2 398.2"/><path d="M66.7 255.9L118.9 399.4"/><path d="M63.4 257.1L115.6 400.5"/><path d="M60.1 258.3L112.3 401.7"/><path d="M56.8 259.5L109.0 402.9"/><path d="M53.5 260.7L105.7 404.1"/><path d="M50.2 261.9L102.5 405.3"/><path d="M47.0 263.1L99.2 406.5"/><path d="M43.7 264.3L95.9 407.7"/><path d="M40.4 265.5L92.6 408.9"/><path d="M37.1 266.7L89.3 410.1"/><path d="M33.8 267.9L86.0 411.3"/><path d="M30.5 269.1L82.7 412.5"/><path d="M27.2 270.3L79.4 413.7"/><path d="M23.9 271.5L76.1 414.9"/><path d="M20.6 272.7L72.9 416.1"/><path d="M17.4 273.9L69.6 417.3"/><path d="M14.1 275.0L66.3 418.5"/><path d="M10.8 276.2L63.0 419.7"/><path d="M7.5 277.4L59.7 420.9"/><path d="M4.2 278.6L56.4 422.1"/></g><ellipse cx="152" cy="276" rx="11" ry="14" stroke-width="1.3"/><clipPath id="h16-ce100"><ellipse cx="152" cy="276" rx="11" ry="14"/></clipPath><g clip-path="url(#h16-ce100)" stroke-width="0.5" opacity="0.6"><path d="M163.7 252.7L180.8 282.2"/><path d="M161.6 254.0L178.6 283.5"/><path d="M159.4 255.2L176.4 284.7"/><path d="M157.2 256.5L174.3 286.0"/><path d="M155.1 257.7L172.1 287.2"/><path d="M152.9 259.0L170.0 288.5"/><path d="M150.7 260.2L167.8 289.7"/><path d="M148.6 261.5L165.6 291.0"/><path d="M146.4 262.7L163.5 292.2"/><path d="M144.3 264.0L161.3 293.5"/><path d="M142.1 265.2L159.1 294.7"/><path d="M139.9 266.5L157.0 296.0"/><path d="M137.8 267.7L154.8 297.2"/><path d="M135.6 269.0L152.6 298.5"/></g><path d="M240 180L218 202" stroke-width="1.5"/><path d="M262 206L242 226" stroke-width="1.5"/><path d="M218 202L242 226" stroke-width="1.3"/><path d="M224 196L248 220" stroke-width="0.9"/><path d="M218 202Q202 214 190 230Q184 238 178 242" stroke-width="1.5"/><path d="M190 232Q174 240 162 252Q154 259 158 263Q164 265 172 258Q182 250 194 246" stroke-width="1.3"/><path d="M160 257Q163 259 164 262" stroke-width="0.7"/><path d="M182 244Q168 254 162 264Q158 272 164 273Q176 268 190 256" stroke-width="1.3"/><path d="M190 256Q172 270 162 282Q158 290 165 290Q180 282 198 266" stroke-width="1.3"/><path d="M198 266Q182 282 172 292Q169 299 176 298Q192 290 206 276" stroke-width="1.3"/><path d="M206 276Q226 254 242 226" stroke-width="1.5"/><path d="M175 260l4 -2M178 276l4 -2" stroke-width="0.45" opacity=".55"/><path d="M212 242l9 5M205 253l8 4" stroke-width="0.4" opacity=".5"/><path d="M136 278l-8 -3M138 286l-8 2" stroke-width=".8"/><path d="M280 300Q350 390 420 300" stroke-width="1.5"/><ellipse cx="350" cy="300" rx="70" ry="11" stroke-width="1.1"/><clipPath id="h16-cb350"><path d="M280 300Q350 390 420 300Z"/></clipPath><g clip-path="url(#h16-cb350)" stroke-width="0.5" opacity="0.6"><path d="M395.6 227.2L447.8 370.6"/><path d="M392.3 228.4L444.5 371.8"/><path d="M389.0 229.6L441.3 373.0"/><path d="M385.8 230.8L438.0 374.2"/><path d="M382.5 232.0L434.7 375.4"/><path d="M379.2 233.2L431.4 376.6"/><path d="M375.9 234.3L428.1 377.8"/><path d="M372.6 235.5L424.8 379.0"/><path d="M369.3 236.7L421.5 380.2"/><path d="M366.0 237.9L418.2 381.4"/><path d="M362.7 239.1L414.9 382.6"/><path d="M359.4 240.3L411.7 383.8"/><path d="M356.2 241.5L408.4 385.0"/><path d="M352.9 242.7L405.1 386.2"/><path d="M349.6 243.9L401.8 387.4"/><path d="M346.3 245.1L398.5 388.6"/><path d="M343.0 246.3L395.2 389.8"/><path d="M339.7 247.5L391.9 391.0"/><path d="M336.4 248.7L388.6 392.2"/><path d="M333.1 249.9L385.3 393.4"/><path d="M329.8 251.1L382.1 394.6"/><path d="M326.6 252.3L378.8 395.8"/><path d="M323.3 253.5L375.5 397.0"/><path d="M320.0 254.7L372.2 398.2"/><path d="M316.7 255.9L368.9 399.4"/><path d="M313.4 257.1L365.6 400.5"/><path d="M310.1 258.3L362.3 401.7"/><path d="M306.8 259.5L359.0 402.9"/><path d="M303.5 260.7L355.7 404.1"/><path d="M300.2 261.9L352.5 405.3"/><path d="M297.0 263.1L349.2 406.5"/><path d="M293.7 264.3L345.9 407.7"/><path d="M290.4 265.5L342.6 408.9"/><path d="M287.1 266.7L339.3 410.1"/><path d="M283.8 267.9L336.0 411.3"/><path d="M280.5 269.1L332.7 412.5"/><path d="M277.2 270.3L329.4 413.7"/><path d="M273.9 271.5L326.1 414.9"/><path d="M270.6 272.7L322.9 416.1"/><path d="M267.4 273.9L319.6 417.3"/><path d="M264.1 275.0L316.3 418.5"/><path d="M260.8 276.2L313.0 419.7"/><path d="M257.5 277.4L309.7 420.9"/><path d="M254.2 278.6L306.4 422.1"/></g><ellipse cx="402" cy="276" rx="11" ry="14" stroke-width="1.3"/><clipPath id="h16-ce350"><ellipse cx="402" cy="276" rx="11" ry="14"/></clipPath><g clip-path="url(#h16-ce350)" stroke-width="0.5" opacity="0.6"><path d="M413.7 252.7L430.8 282.2"/><path d="M411.6 254.0L428.6 283.5"/><path d="M409.4 255.2L426.4 284.7"/><path d="M407.2 256.5L424.3 286.0"/><path d="M405.1 257.7L422.1 287.2"/><path d="M402.9 259.0L420.0 288.5"/><path d="M400.7 260.2L417.8 289.7"/><path d="M398.6 261.5L415.6 291.0"/><path d="M396.4 262.7L413.5 292.2"/><path d="M394.3 264.0L411.3 293.5"/><path d="M392.1 265.2L409.1 294.7"/><path d="M389.9 266.5L407.0 296.0"/><path d="M387.8 267.7L404.8 297.2"/><path d="M385.6 269.0L402.6 298.5"/></g><path d="M490 180L468 202" stroke-width="1.5"/><path d="M512 206L492 226" stroke-width="1.5"/><path d="M468 202L492 226" stroke-width="1.3"/><path d="M474 196L498 220" stroke-width="0.9"/><path d="M468 202Q452 214 440 230Q434 238 428 242" stroke-width="1.5"/><path d="M440 232Q424 240 412 252Q404 259 408 263Q414 265 422 258Q432 250 444 246" stroke-width="1.3"/><path d="M410 257Q413 259 414 262" stroke-width="0.7"/><path d="M432 244Q418 254 412 264Q408 272 414 273Q426 268 440 256" stroke-width="1.3"/><path d="M440 256Q422 270 412 282Q408 290 415 290Q430 282 448 266" stroke-width="1.3"/><path d="M448 266Q432 282 422 292Q419 299 426 298Q442 290 456 276" stroke-width="1.3"/><path d="M456 276Q476 254 492 226" stroke-width="1.5"/><path d="M425 260l4 -2M428 276l4 -2" stroke-width="0.45" opacity=".55"/><path d="M462 242l9 5M455 253l8 4" stroke-width="0.4" opacity=".5"/><path d="M386 278l-8 -3M388 286l-8 2" stroke-width=".8"/><path d="M230 200H310" stroke-width=".8" stroke-dasharray="3 5"/><text x="270" y="190" font-family="Georgia,serif" font-size="22" fill="#1c1914" stroke="none" text-anchor="middle" opacity=".8">?</text><text x="100" y="400" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle">SEEN</text><text x="350" y="400" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle">GUESSED</text></svg></div>
+</section>
+<section class="sec " id="s2" data-t="How it works">
+<div class="arg"><div class="sm kick">How it works</div><h2><span>You see</span><span>the action</span><span>not the idea</span></h2><p class="c">A meme is never seen directly, only someone&#x27;s actions. To copy it faithfully you have to guess the reason behind them. Even faithful copying takes creativity.</p></div>
+<div class="fg"><div id="ix" data-state=""><p class="q" id="ac"></p><div class="guesses" id="rs"></div><div class="trial" id="rv" aria-live="polite"></div>
+<div class="row"><button id="nx" disabled>Next</button></div></div></div>
+</section>
+<section class="sec " id="s3" data-t="Real life">
+<div class="arg"><div class="sm kick">Real life</div><div class="opts row" id="cs"><button class="opt on" data-c="0" aria-pressed="true">Hand axes</button><button class="opt" data-c="1" aria-pressed="false">Apes copy steps</button></div><p class="c cstx" data-c="0"><b>Hand axes.</b> Stone hand axes changed very little for over a million years. Faithful copying, almost no new ideas.</p><p class="c cstx" data-c="1" hidden><b>Apes copy steps.</b> <span class="n" data-n="byrne" tabindex="0" role="button">Byrne</span> found that gorillas learn to prepare nettles as a sequence of steps, not by copying each motion.</p></div>
+<div class="fg"><div class="case-fg" id="csF"><div data-c="0"><svg viewBox="0 0 160 120" fill="none" stroke="#1c1914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Hand axes"><path d="M50 100C30 70 50 30 60 20C70 30 90 70 70 100Z"/><path d="M110 100C90 70 110 30 120 20C130 30 150 70 130 100Z"/></svg></div><div data-c="1" hidden><svg viewBox="0 0 160 120" fill="none" stroke="#1c1914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Apes copy steps"><path d="M20 60h28M60 60h28M100 60h28" stroke-width="1.2"/><path d="M48 60l-6-5M48 60l-6 5M88 60l-6-5M88 60l-6 5" stroke-width="1"/></svg></div></div></div>
+</section>
+<section class="sec s3d" id="s4" data-t="The egg">
+<div class="arg"><div class="sm kick">In 3D</div><h2><span>Watch</span><span>the tap</span></h2><p class="sm pr16" id="pr16">Drag round the bowl · look for the reason</p><div><input type="range" id="d3" aria-describedby="pr16" min="0" max="360" step="15" value="15" aria-label="Walk around the bowl"></div><p class="vd" id="vd" aria-live="polite">You can see the tap from every side. You still can&#x27;t see the reason.</p><p class="c">An egg is tapped on the rim of a bowl. Look from any side before you guess.</p></div>
+<div class="fg"><div class="orb" id="orb" data-kind="egg"><div class="fb"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" fill="none" stroke="#1c1914" stroke-linecap="round" stroke-linejoin="round" aria-label="A hand tapping an egg on a bowl rim, copied by a second hand that must guess why: thumb on top, fingers curled under"><path d="M30 300Q100 390 170 300" stroke-width="1.5"/><ellipse cx="100" cy="300" rx="70" ry="11" stroke-width="1.1"/><clipPath id="f16-cb100"><path d="M30 300Q100 390 170 300Z"/></clipPath><g clip-path="url(#f16-cb100)" stroke-width="0.5" opacity="0.6"><path d="M145.6 227.2L197.8 370.6"/><path d="M142.3 228.4L194.5 371.8"/><path d="M139.0 229.6L191.3 373.0"/><path d="M135.8 230.8L188.0 374.2"/><path d="M132.5 232.0L184.7 375.4"/><path d="M129.2 233.2L181.4 376.6"/><path d="M125.9 234.3L178.1 377.8"/><path d="M122.6 235.5L174.8 379.0"/><path d="M119.3 236.7L171.5 380.2"/><path d="M116.0 237.9L168.2 381.4"/><path d="M112.7 239.1L164.9 382.6"/><path d="M109.4 240.3L161.7 383.8"/><path d="M106.2 241.5L158.4 385.0"/><path d="M102.9 242.7L155.1 386.2"/><path d="M99.6 243.9L151.8 387.4"/><path d="M96.3 245.1L148.5 388.6"/><path d="M93.0 246.3L145.2 389.8"/><path d="M89.7 247.5L141.9 391.0"/><path d="M86.4 248.7L138.6 392.2"/><path d="M83.1 249.9L135.3 393.4"/><path d="M79.8 251.1L132.1 394.6"/><path d="M76.6 252.3L128.8 395.8"/><path d="M73.3 253.5L125.5 397.0"/><path d="M70.0 254.7L122.2 398.2"/><path d="M66.7 255.9L118.9 399.4"/><path d="M63.4 257.1L115.6 400.5"/><path d="M60.1 258.3L112.3 401.7"/><path d="M56.8 259.5L109.0 402.9"/><path d="M53.5 260.7L105.7 404.1"/><path d="M50.2 261.9L102.5 405.3"/><path d="M47.0 263.1L99.2 406.5"/><path d="M43.7 264.3L95.9 407.7"/><path d="M40.4 265.5L92.6 408.9"/><path d="M37.1 266.7L89.3 410.1"/><path d="M33.8 267.9L86.0 411.3"/><path d="M30.5 269.1L82.7 412.5"/><path d="M27.2 270.3L79.4 413.7"/><path d="M23.9 271.5L76.1 414.9"/><path d="M20.6 272.7L72.9 416.1"/><path d="M17.4 273.9L69.6 417.3"/><path d="M14.1 275.0L66.3 418.5"/><path d="M10.8 276.2L63.0 419.7"/><path d="M7.5 277.4L59.7 420.9"/><path d="M4.2 278.6L56.4 422.1"/></g><ellipse cx="152" cy="276" rx="11" ry="14" stroke-width="1.3"/><clipPath id="f16-ce100"><ellipse cx="152" cy="276" rx="11" ry="14"/></clipPath><g clip-path="url(#f16-ce100)" stroke-width="0.5" opacity="0.6"><path d="M163.7 252.7L180.8 282.2"/><path d="M161.6 254.0L178.6 283.5"/><path d="M159.4 255.2L176.4 284.7"/><path d="M157.2 256.5L174.3 286.0"/><path d="M155.1 257.7L172.1 287.2"/><path d="M152.9 259.0L170.0 288.5"/><path d="M150.7 260.2L167.8 289.7"/><path d="M148.6 261.5L165.6 291.0"/><path d="M146.4 262.7L163.5 292.2"/><path d="M144.3 264.0L161.3 293.5"/><path d="M142.1 265.2L159.1 294.7"/><path d="M139.9 266.5L157.0 296.0"/><path d="M137.8 267.7L154.8 297.2"/><path d="M135.6 269.0L152.6 298.5"/></g><path d="M240 180L218 202" stroke-width="1.5"/><path d="M262 206L242 226" stroke-width="1.5"/><path d="M218 202L242 226" stroke-width="1.3"/><path d="M224 196L248 220" stroke-width="0.9"/><path d="M218 202Q202 214 190 230Q184 238 178 242" stroke-width="1.5"/><path d="M190 232Q174 240 162 252Q154 259 158 263Q164 265 172 258Q182 250 194 246" stroke-width="1.3"/><path d="M160 257Q163 259 164 262" stroke-width="0.7"/><path d="M182 244Q168 254 162 264Q158 272 164 273Q176 268 190 256" stroke-width="1.3"/><path d="M190 256Q172 270 162 282Q158 290 165 290Q180 282 198 266" stroke-width="1.3"/><path d="M198 266Q182 282 172 292Q169 299 176 298Q192 290 206 276" stroke-width="1.3"/><path d="M206 276Q226 254 242 226" stroke-width="1.5"/><path d="M175 260l4 -2M178 276l4 -2" stroke-width="0.45" opacity=".55"/><path d="M212 242l9 5M205 253l8 4" stroke-width="0.4" opacity=".5"/><path d="M136 278l-8 -3M138 286l-8 2" stroke-width=".8"/><path d="M280 300Q350 390 420 300" stroke-width="1.5"/><ellipse cx="350" cy="300" rx="70" ry="11" stroke-width="1.1"/><clipPath id="f16-cb350"><path d="M280 300Q350 390 420 300Z"/></clipPath><g clip-path="url(#f16-cb350)" stroke-width="0.5" opacity="0.6"><path d="M395.6 227.2L447.8 370.6"/><path d="M392.3 228.4L444.5 371.8"/><path d="M389.0 229.6L441.3 373.0"/><path d="M385.8 230.8L438.0 374.2"/><path d="M382.5 232.0L434.7 375.4"/><path d="M379.2 233.2L431.4 376.6"/><path d="M375.9 234.3L428.1 377.8"/><path d="M372.6 235.5L424.8 379.0"/><path d="M369.3 236.7L421.5 380.2"/><path d="M366.0 237.9L418.2 381.4"/><path d="M362.7 239.1L414.9 382.6"/><path d="M359.4 240.3L411.7 383.8"/><path d="M356.2 241.5L408.4 385.0"/><path d="M352.9 242.7L405.1 386.2"/><path d="M349.6 243.9L401.8 387.4"/><path d="M346.3 245.1L398.5 388.6"/><path d="M343.0 246.3L395.2 389.8"/><path d="M339.7 247.5L391.9 391.0"/><path d="M336.4 248.7L388.6 392.2"/><path d="M333.1 249.9L385.3 393.4"/><path d="M329.8 251.1L382.1 394.6"/><path d="M326.6 252.3L378.8 395.8"/><path d="M323.3 253.5L375.5 397.0"/><path d="M320.0 254.7L372.2 398.2"/><path d="M316.7 255.9L368.9 399.4"/><path d="M313.4 257.1L365.6 400.5"/><path d="M310.1 258.3L362.3 401.7"/><path d="M306.8 259.5L359.0 402.9"/><path d="M303.5 260.7L355.7 404.1"/><path d="M300.2 261.9L352.5 405.3"/><path d="M297.0 263.1L349.2 406.5"/><path d="M293.7 264.3L345.9 407.7"/><path d="M290.4 265.5L342.6 408.9"/><path d="M287.1 266.7L339.3 410.1"/><path d="M283.8 267.9L336.0 411.3"/><path d="M280.5 269.1L332.7 412.5"/><path d="M277.2 270.3L329.4 413.7"/><path d="M273.9 271.5L326.1 414.9"/><path d="M270.6 272.7L322.9 416.1"/><path d="M267.4 273.9L319.6 417.3"/><path d="M264.1 275.0L316.3 418.5"/><path d="M260.8 276.2L313.0 419.7"/><path d="M257.5 277.4L309.7 420.9"/><path d="M254.2 278.6L306.4 422.1"/></g><ellipse cx="402" cy="276" rx="11" ry="14" stroke-width="1.3"/><clipPath id="f16-ce350"><ellipse cx="402" cy="276" rx="11" ry="14"/></clipPath><g clip-path="url(#f16-ce350)" stroke-width="0.5" opacity="0.6"><path d="M413.7 252.7L430.8 282.2"/><path d="M411.6 254.0L428.6 283.5"/><path d="M409.4 255.2L426.4 284.7"/><path d="M407.2 256.5L424.3 286.0"/><path d="M405.1 257.7L422.1 287.2"/><path d="M402.9 259.0L420.0 288.5"/><path d="M400.7 260.2L417.8 289.7"/><path d="M398.6 261.5L415.6 291.0"/><path d="M396.4 262.7L413.5 292.2"/><path d="M394.3 264.0L411.3 293.5"/><path d="M392.1 265.2L409.1 294.7"/><path d="M389.9 266.5L407.0 296.0"/><path d="M387.8 267.7L404.8 297.2"/><path d="M385.6 269.0L402.6 298.5"/></g><path d="M490 180L468 202" stroke-width="1.5"/><path d="M512 206L492 226" stroke-width="1.5"/><path d="M468 202L492 226" stroke-width="1.3"/><path d="M474 196L498 220" stroke-width="0.9"/><path d="M468 202Q452 214 440 230Q434 238 428 242" stroke-width="1.5"/><path d="M440 232Q424 240 412 252Q404 259 408 263Q414 265 422 258Q432 250 444 246" stroke-width="1.3"/><path d="M410 257Q413 259 414 262" stroke-width="0.7"/><path d="M432 244Q418 254 412 264Q408 272 414 273Q426 268 440 256" stroke-width="1.3"/><path d="M440 256Q422 270 412 282Q408 290 415 290Q430 282 448 266" stroke-width="1.3"/><path d="M448 266Q432 282 422 292Q419 299 426 298Q442 290 456 276" stroke-width="1.3"/><path d="M456 276Q476 254 492 226" stroke-width="1.5"/><path d="M425 260l4 -2M428 276l4 -2" stroke-width="0.45" opacity=".55"/><path d="M462 242l9 5M455 253l8 4" stroke-width="0.4" opacity=".5"/><path d="M386 278l-8 -3M388 286l-8 2" stroke-width=".8"/><path d="M230 200H310" stroke-width=".8" stroke-dasharray="3 5"/><text x="270" y="190" font-family="Georgia,serif" font-size="22" fill="#1c1914" stroke="none" text-anchor="middle" opacity=".8">?</text><text x="100" y="400" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle">SEEN</text><text x="350" y="400" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle">GUESSED</text></svg></div></div></div>
+</section>
+<section class="sec " id="s5" data-t="People">
+<div class="arg"><div class="sm kick">People in this chapter</div><div class="people" id="pp"><button class="opt on" data-n="byrne" aria-pressed="true">Byrne</button><button class="opt" data-n="blackmore" aria-pressed="false">Blackmore</button><button class="opt" data-n="popper" aria-pressed="false">Popper</button></div></div>
+<div class="fg"><div class="card" id="card" aria-live="polite"><h3>Richard Byrne</h3><div class="d sm">British primatologist at St Andrews</div><p>Showed apes copy by breaking actions into steps. A clue to what creativity first evolved for.</p></div></div>
+</section>
+</main>
+<footer><a class="ch" id="pc" href="ch-15.html">← 15</a><button id="prev">← Previous</button><div class="prog" id="bar"></div><span class="cnt sm" id="cnt"></span><button id="next">Next →</button><a class="ch" id="nc" href="ch-17.html" hidden>17 →</a></footer>
+<div id="note" role="dialog" aria-live="polite"><h3></h3><div class="d"></div><p style="margin:0"></p></div>
+<script>/* nfit v3: inline glossary terms (.n) get up to 12px/6px of invisible hit padding, clipped at the midpoint so they never overlap a neighbouring term or another control. The CSS default vertical padding is 0, so stacked terms don't overlap before the first fit. r6: this script sits right after the footer, before three.js and the chapter script, so its observers exist before the chapter shows a section; when the chapter shows a section (a class/hidden/open change) the fit runs synchronously in the observer callback, a microtask in the same task, so no frame can paint the shown terms unfitted; other DOM changes refit in the next animation frame (QC f193 P3: under load the page painted while parsing, before the old end-of-body fit). Text boxes are measured as the client rects minus the current computed padding (no style writes to measure), in CSS-zoom-aware units (currentCSSZoom; browsers without it report unzoomed rects). Padding is floored to whole px and a var is only written when its value changes. */
+(function(){var D=12,H=6,q=0,SEL='a[href],button,input,select,textarea,summary,[role=button],[role=link],[role=tab],[role=slider],[tabindex]';
+function fit(){q=0;var N=[].slice.call(document.querySelectorAll('.n'));if(!N.length)return;
+ var T=N.filter(function(n){return n.getClientRects().length}).map(function(n){var r=[].slice.call(n.getClientRects()),L=r.length,z=typeof n.currentCSSZoom==='number'&&n.currentCSSZoom>0?n.currentCSSZoom:1,c=getComputedStyle(n),pt=parseFloat(c.paddingTop)*z,pb=parseFloat(c.paddingBottom)*z,pl=parseFloat(c.paddingLeft)*z,pr=parseFloat(c.paddingRight)*z;n.classList.toggle('nm',L>1);
+  return {n:n,z:z,d:D*z,h:H*z,p:{t:D*z,b:D*z,l:H*z,r:H*z},f:r.map(function(x,i){return {l:x.left+(i===0?pl:0),r:x.right-(i===L-1?pr:0),t:x.top+pt,b:x.bottom-pb}})}});
+ var O=[].slice.call(document.querySelectorAll(SEL)).filter(function(e){return !e.classList.contains('n')&&!e.closest('.n')&&e.getClientRects().length}).map(function(e){return e.getBoundingClientRect()});
+ for(var i=0;i<T.length;i++)for(var j=0;j<T.length;j++){if(i===j)continue;var A=T[i],B=T[j];
+  A.f.forEach(function(a){B.f.forEach(function(b){
+   var hx=a.l-A.h<b.r+B.h&&b.l-B.h<a.r+A.h,vx=a.t-A.d<b.b+B.d&&b.t-B.d<a.b+A.d;
+   if(b.t>=a.b-0.5&&hx){var g=Math.max(0,(b.t-a.b)/2);A.p.b=Math.min(A.p.b,g);B.p.t=Math.min(B.p.t,g)}            /* b on a later line */
+   else if(b.t<a.b-0.5&&a.t<b.b-0.5&&b.l>=a.r-0.5&&vx&&a.r+A.h>b.l-B.h){var h=Math.max(0,(b.l-a.r)/2);A.p.r=Math.min(A.p.r,h);B.p.l=Math.min(B.p.l,h)} /* same line, b to the right */
+  })})}
+ T.forEach(function(A){A.f.forEach(function(a){O.forEach(function(o){if(!(o.left<a.r+A.p.r&&a.l-A.p.l<o.right))return;
+   if(o.bottom<=a.t+0.5&&o.bottom>a.t-A.p.t)A.p.t=Math.max(0,a.t-o.bottom);
+   if(o.top>=a.b-0.5&&o.top<a.b+A.p.b)A.p.b=Math.max(0,o.top-a.b)})})});
+ T.forEach(function(A){var s=A.n.style,p=A.p,z=A.z;function set(k,v,m){v=Math.min(m,Math.floor(v/z+1e-6))+'px';if(s.getPropertyValue(k)!==v)s.setProperty(k,v)}
+  set('--nt',p.t,D);set('--nb',p.b,D);set('--nl',p.l,H);set('--nr',p.r,H)})}
+function go(){if(!q)q=requestAnimationFrame(fit)}
+function watch(){var ro='ResizeObserver'in window?new ResizeObserver(go):null;if(ro){ro.observe(document.body);[].forEach.call(document.querySelectorAll('.n'),function(n){if(n.parentElement)ro.observe(n.parentElement)})}
+ new MutationObserver(function(m){var a=0,o=0;for(var i=0;i<m.length;i++){if(m[i].type==='attributes'){if(m[i].attributeName!=='style')a=1}else o=1}if(a){if(q)cancelAnimationFrame(q);fit()}else if(o)go()}).observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['hidden','class','open']});
+ addEventListener('resize',go);addEventListener('load',go);if(document.fonts&&document.fonts.ready)document.fonts.ready.then(go)}
+fit();watch();if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);go()})();</script>
+<script src="lib/three.min.js"></script>
+<script src="lib/engrave.js"></script>
+<script>
+
+const S=[...document.querySelectorAll('.sec')];let cur=0;
+const idx=document.getElementById('idx'),bar=document.getElementById('bar'),prev=document.getElementById('prev'),next=document.getElementById('next'),pc=document.getElementById('pc'),nc=document.getElementById('nc');
+S.forEach((s,i)=>{idx.insertAdjacentHTML('beforeend',`<li><button data-i="${i}"><em>${String(i+1).padStart(2,'0')}</em><span>${s.dataset.t}</span></button></li>`);bar.insertAdjacentHTML('beforeend','<i></i>')});
+function go(i){i=Math.max(0,Math.min(S.length-1,i));cur=i;
+ S.forEach((s,k)=>s.classList.toggle('on',k===i));
+ idx.querySelectorAll('button').forEach((b,k)=>{b.classList.toggle('on',k===i);b.setAttribute('aria-current',k===i?'step':'false')});
+ bar.querySelectorAll('i').forEach((b,k)=>b.classList.toggle('on',k===i));
+ document.getElementById('cnt').textContent=`${i+1} / ${S.length}`;
+ prev.hidden=i===0;pc.hidden=i!==0;next.hidden=i===S.length-1;nc.hidden=i!==S.length-1;
+ history.replaceState(null,'','#'+(i+1));window.scrollTo(0,0);
+ window.dispatchEvent(new CustomEvent('section',{detail:i}));}
+window.go=go;
+document.querySelectorAll('.n').forEach((e,i,a)=>e.style.zIndex=a.length-i);
+{let sx=null,sy=0;const M=document.querySelector('main');M.addEventListener('touchstart',e=>{const t=e.target;if(e.touches.length!==1||(t.closest&&t.closest('input,canvas,#ix,.orb,#note')))return sx=null;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+M.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dy)<Math.abs(dx)*.6)go(cur+(dx<0?1:-1))},{passive:true});}
+prev.onclick=()=>{go(cur-1);(cur===0?pc:prev).focus()};next.onclick=()=>{go(cur+1);(cur===S.length-1?nc:next).focus()};
+idx.onclick=e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{go(+b.dataset.go-1);next.focus()});
+document.addEventListener('keydown',e=>{const t=e.target;if(t.closest&&t.closest('input,textarea,select,#ix,.orb,.opts,.people,#cs,[role=button]'))return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+const dr=document.getElementById('drawer'),sc=document.getElementById('scrim'),mb=document.getElementById('menuBtn');
+const dset=o=>{dr.classList.toggle('open',o);sc.classList.toggle('on',o);dr.inert=!o;mb.setAttribute('aria-expanded',o);(o?document.getElementById('closeBtn'):mb).focus()};dr.inert=true;
+mb.onclick=()=>dset(true);document.getElementById('closeBtn').onclick=()=>dset(false);sc.onclick=()=>dset(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dr.classList.contains('open'))dset(false)});
+/* real life */
+const csB=document.querySelectorAll('#cs .opt');
+csB.forEach(b=>b.onclick=()=>{const c=b.dataset.c;csB.forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
+ document.querySelectorAll('#csF>[data-c],.cstx').forEach(e=>e.hidden=e.dataset.c!==c)});
+/* people + inline name cards */
+const N={"byrne": ["Richard Byrne", "British primatologist at St Andrews", "Showed apes copy by breaking actions into steps. A clue to what creativity first evolved for."], "blackmore": ["Susan Blackmore", "b. 1951 · British psychologist", "Says memes spread by imitation. Deutsch says you can't see an idea, so you have to rebuild it."], "popper": ["Karl Popper", "1902–1994 · Austrian-British philosopher", "His guess-first theory is how Deutsch says we copy memes at all."]};
+const pp=document.getElementById('pp'),card=document.getElementById('card');
+pp.onclick=e=>{const b=e.target.closest('button');if(!b)return;pp.querySelectorAll('button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
+ const[a,d,c]=N[b.dataset.n];card.children[0].textContent=a;card.children[1].textContent=d;card.children[2].textContent=c};
+const box=document.getElementById('note');
+function openN(s){const[a,b,c]=N[s.dataset.n];box.children[0].textContent=a;box.children[1].textContent=b;box.children[2].textContent=c;box.classList.add('show')}
+document.addEventListener('click',e=>{const s=e.target.closest('.n');if(s){e.stopPropagation();openN(s);return}if(!box.contains(e.target))box.classList.remove('show')});
+document.addEventListener('keydown',e=>{const s=e.target.closest&&e.target.closest('.n');if(s&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openN(s)}if(e.key==='Escape')box.classList.remove('show')});
+
+{const $=s=>document.querySelector(s),ix=document.getElementById('ix'),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;function st(v){ix.dataset.state=String(v)}
+const R=[['You watch an old cook rub salt into a pot before cooking, then wipe it out.',[['To season the food.','Then you would leave the salt in. Your copy would fail the way the cook\'s never does.'],['To scrub the pot clean.','Then any scrub will do, and you can swap in something better. You copied the reason, not the motion.'],['Because it brings luck.','Then you copy every motion exactly, and you can never adapt it when the pot changes.']]],
+['You watch someone tap a jar lid on the table twice before opening it.',[['To loosen the seal.','Then on a stubborn jar you tap harder. The idea told you what to do next.'],['It is just a habit.','Then you copy two taps forever, even when it does nothing.'],['To warn people nearby.','Then you tap loudly in a quiet room. You copied a different idea from the one you saw.']]]];
+let r=0,picks=0;function show(){const[a,o]=R[r];$('#ac').textContent=a+' Why?';$('#rv').innerHTML='';$('#nx').disabled=true;
+$('#rs').innerHTML=o.map((x,i)=>'<button data-i="'+i+'">'+x[0]+'</button>').join('');
+document.querySelectorAll('#rs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('#rs button').forEach(x=>x.classList.remove('on'));b.classList.add('on');picks++;
+$('#rv').innerHTML='<div class="crit show"><span class="mark">→</span><span>'+o[b.dataset.i][1]+'</span></div><div class="verdict show">You never saw the reason. You guessed it.</div>';$('#nx').disabled=r>=R.length-1;st(r+':'+b.dataset.i+':'+picks)});st(r+':-:'+picks);}
+$('#nx').onclick=()=>{r=Math.min(r+1,R.length-1);show();$('#rs button').focus()};show();}
+{const d3=document.getElementById('d3'),vd=document.getElementById('vd'),api=BOI3D(document.getElementById('orb'),'egg');
+d3.oninput=()=>{d3.setAttribute('aria-valuetext',d3.value+' degrees');api&&api.set(+d3.value)};}
+
+go(Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+</script>
+<script>/* r6 (QC f193bd40 P2, WebKit): WebKit doesn't scroll keyboard focus when the element is already inside the viewport, so scroll-padding never applies to a control already sitting behind the sticky footer (ch-04 §1 terms at 667x375). After keyboard focus, scroll just enough to clear the footer (its top - 8px), never past the element's own top. Focus from a pointer press, focus in the footer and focus in fixed layers (the drawer) never scroll. */
+(function(){var f=document.querySelector('footer');if(!f)return;var lp=-1e9;
+['pointerdown','pointerup','mousedown','mouseup','touchstart','touchend','click'].forEach(function(t){addEventListener(t,function(){lp=Date.now()},{capture:true,passive:true})});
+document.addEventListener('focusin',function(e){var el=e.target;if(!el||!el.getBoundingClientRect||Date.now()-lp<1000||f.contains(el))return;var kv=true;try{kv=el.matches(':focus-visible')}catch(x){}if(!kv)return;
+ requestAnimationFrame(function(){if(document.activeElement!==el)return;var s=getComputedStyle(f).position;if(s!=='sticky'&&s!=='fixed')return;
+  for(var a=el;a&&a!==document.body;a=a.parentElement)if(getComputedStyle(a).position==='fixed')return;
+  var r=el.getBoundingClientRect(),t=f.getBoundingClientRect().top-8;if(!r.height||r.bottom<=t+0.5)return;var d=Math.min(r.bottom-t,Math.max(0,r.top-8));
+  if(d>0.5)window.scrollTo({top:window.scrollY+d,left:window.scrollX,behavior:'instant'})})})})();</script>
+</body></html>
