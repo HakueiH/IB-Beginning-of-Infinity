@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Choices — The Beginning of Infinity</title>
+<style>@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-500.woff2) format("woff2")}@font-face{font-family:Manrope;font-style:normal;font-weight:400 500;font-display:swap;src:url(fonts/manrope-var.woff2) format("woff2")}</style>
+<style>
+:root{--paper:#f3eee4;--ink:#1c1914;--mute:rgba(28,25,20,.5);--rule:rgba(28,25,20,.16)}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cormorant Garamond",Georgia,serif;display:grid;grid-template-columns:64px 1fr;grid-template-rows:auto 1fr auto;min-height:100vh}
+.sm{font:500 11px/1 Manrope,system-ui,sans-serif;letter-spacing:.18em;text-transform:uppercase}
+button{font-family:Manrope,sans-serif;color:var(--ink);background:none;border:0;cursor:pointer;padding:0}
+/* chapter rail */
+#rail{grid-row:1/4;border-right:1px solid var(--rule);display:flex;flex-direction:column;align-items:center;padding:22px 0;gap:4px}
+#rail .menu{width:32px;height:32px;margin-bottom:14px;display:grid;place-items:center}
+#rail .menu i{display:block;width:16px;height:1px;background:var(--ink);box-shadow:0 5px 0 var(--ink),0 -5px 0 var(--ink)}
+#rail a{display:block;font:400 10px/1 Manrope,sans-serif;color:var(--mute);text-decoration:none;padding:5px 0;width:100%;text-align:center;letter-spacing:.06em}
+#rail a .rt{display:none}#rail a.live{color:var(--ink);font-weight:500;position:relative}#rail a.live:before{content:"";position:absolute;left:0;top:2px;bottom:2px;width:2px;background:var(--ink)}
+#drawer{position:fixed;inset:0 auto 0 0;width:min(340px,86vw);background:var(--paper);border-right:1px solid var(--ink);padding:28px 28px;transform:translateX(-102%);transition:transform .35s ease;z-index:20;overflow:auto}
+#drawer.open{transform:none;box-shadow:0 0 60px rgba(28,25,20,.12)}
+#drawer ol{list-style:none;margin:22px 0 0;padding:0}
+#drawer li a{color:inherit;text-decoration:none;display:contents}#drawer li{display:grid;grid-template-columns:28px 1fr;padding:9px 0;border-bottom:1px solid var(--rule);font:500 1.12rem/1.2 "Cormorant Garamond",serif;color:var(--mute)}
+#drawer li b{font:400 10px/2.2 Manrope,sans-serif}
+#drawer li.live{color:var(--ink)}#drawer li.live span:after{content:" ·  reading";font:500 9px Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+#drawer .x{float:right;font-size:20px;line-height:1}
+#scrim{position:fixed;inset:0;background:rgba(28,25,20,.08);opacity:0;pointer-events:none;transition:.3s;z-index:19}#scrim.on{opacity:1;pointer-events:auto}
+/* header + index */
+header{padding:22px 6vw 0;display:flex;justify-content:space-between;align-items:baseline;gap:20px;flex-wrap:wrap}
+header .t{color:var(--mute)}
+#idx{display:flex;gap:22px;list-style:none;margin:0;padding:0}
+#idx button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);padding:6px 0;border-bottom:1px solid transparent}
+#idx button.on{color:var(--ink);border-color:var(--ink)}
+#idx em{font-style:normal;margin-right:6px}
+/* stage */
+main{position:relative;padding:4vh 6vw 2vh;display:grid;align-items:center}
+.sec{display:none;grid-template-columns:.9fr 1.1fr;gap:5vw;align-items:center;animation:in .45s ease}
+.sec.on{display:grid}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.arg{display:grid;gap:22px;align-content:center;max-width:30em}
+h1,h2{margin:0;font-weight:500;text-transform:uppercase;letter-spacing:.015em;line-height:.92}
+h1{font-size:clamp(2.5rem,4.6vw,4.8rem)}h2{font-size:clamp(2rem,3.2vw,3.3rem)}
+h1 span,h2 span{display:block}
+.kick{color:var(--mute)}
+p.c{font:400 16px/1.55 Manrope,sans-serif;color:var(--mute);margin:0}
+p.c b{color:var(--ink);font-weight:500}
+.fg{position:relative;min-height:0}
+.fg svg{width:100%;height:auto;display:block;max-height:62vh}
+.cap{margin-top:10px;color:var(--mute);text-align:right}
+/* controls */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{font:400 15px/1.35 Manrope,sans-serif;text-align:left;border:1px solid var(--rule);padding:13px 15px;border-radius:2px}
+.opt:hover{border-color:var(--ink)}.opt.on{border-color:var(--ink);background:rgba(28,25,20,.04)}
+.row{flex-direction:row;flex-wrap:wrap}.row .opt{padding:10px 14px}
+.begin{justify-self:start;font:500 12px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;border:1px solid var(--ink);padding:14px 18px}
+.begin:hover{background:var(--ink);color:var(--paper)}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;background:none;height:28px;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:1px;background:var(--ink)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);margin-top:-9px}
+input[type=range]::-moz-range-track{height:1px;background:var(--ink)}input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink)}
+.ticks{display:flex;justify-content:space-between;color:var(--mute);margin-top:4px}
+.read{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font:400 14px/1.4 Manrope,sans-serif;border-top:1px solid var(--rule);padding-top:14px}
+.read dt{color:var(--mute)}.read dd{margin:0}
+/* trial */
+.trial{font:400 16px/1.5 Manrope,sans-serif;min-height:240px;max-width:30em;margin-left:auto;width:100%}
+.crit{display:grid;grid-template-columns:24px 1fr;gap:10px;padding:12px 0;border-bottom:1px solid var(--rule);opacity:0;transform:translateX(12px);transition:.45s}
+.crit.show{opacity:1;transform:none}.mark{font-weight:500}
+.verdict{margin-top:20px;font:500 1.9rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.03em;opacity:0;transition:.4s}.verdict.show{opacity:1}
+/* 3d */
+.orb{position:relative;aspect-ratio:4/3;width:100%}
+.orb canvas{width:100%!important;height:100%!important;display:block}
+.orb .lab{position:absolute;transform:translate(-50%,-50%);white-space:nowrap;color:var(--mute);pointer-events:none;font-size:10px}
+.orb #lPeri{transform:translate(-30%,-50%)}#fb{display:none}.orb.fallback canvas,.orb.fallback .lab{display:none}.orb.fallback #fb{display:block}
+#fb .fbE .ring{stroke-width:1}#fb .fbE text{opacity:.35}
+#fb .fbE.on .ring{stroke-width:2.6}#fb .fbE.on text{opacity:1;font-weight:500}
+/* stamp */
+.toggle{display:inline-grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);border-radius:2px;justify-self:start}
+.toggle button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:13px 18px}
+.toggle button.on{background:var(--ink);color:var(--paper)}
+#stamp text{transition:opacity .4s}
+/* cases + people */
+.case-fig svg{max-height:52vh}
+.people{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.people .opt{font-size:14px;padding:11px 12px}
+.card{border:1px solid var(--ink);padding:34px 36px;max-width:440px;margin-left:auto;background:var(--paper);box-shadow:0 14px 40px rgba(28,25,20,.08)}
+.card h3{margin:0 0 8px;font:500 2.2rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.02em}
+.card .d{color:var(--mute);margin-bottom:18px}
+.card p{font:400 16px/1.6 Manrope,sans-serif;margin:0}
+/* footer nav */
+footer{padding:0 6vw 26px;display:flex;align-items:center;gap:20px}
+footer .prog{flex:1;display:flex;gap:6px}footer .prog i{flex:1;height:1px;background:var(--rule)}footer .prog i.on{height:2px;background:var(--ink)}
+footer button{font:500 11px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:12px 0}
+footer button:disabled{opacity:.25;cursor:default}
+footer .cnt{color:var(--mute);min-width:42px;text-align:center}
+@media(max-width:820px){
+ body{grid-template-columns:1fr;grid-template-rows:auto auto 1fr auto}
+ #rail{grid-row:auto;flex-direction:row;border-right:0;border-bottom:1px solid var(--rule);padding:10px 5vw;justify-content:flex-start;gap:12px}
+ #rail a{display:block;display:none}#rail a.live .rt{display:inline;margin-left:8px}#rail a.live{display:block;width:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;padding-left:10px}
+ #rail .menu{margin:0}
+ header{padding:14px 6vw 0}header .t{display:none}
+ #idx{gap:0;width:100%;justify-content:space-between}#idx span{display:none}#idx em{margin:0}#idx button{padding:8px 10px}
+ main{padding:18px 6vw 10px;align-items:start}
+ .sec{grid-template-columns:1fr;gap:20px}
+ .arg{gap:14px}
+ h1{font-size:2.5rem}h2{font-size:2rem}
+ .fg svg{max-height:none}
+ .trial{min-height:0;margin:0}
+ .people{grid-template-columns:repeat(2,1fr)}
+ .card{margin:0;padding:24px}
+ footer{position:sticky;bottom:0;background:var(--paper);padding:10px 6vw 16px;border-top:1px solid var(--rule)}
+ /* figure above control on phone for 3D */
+ .s3d .fg{order:-1}
+}
+
+.orb{position:relative;aspect-ratio:4/3;width:100%;max-height:62vh}
+.orb.fallback{aspect-ratio:auto;max-height:none!important}
+.orb .fb{display:none}.orb.fallback canvas,.orb.fallback .lab{display:none}.orb.fallback .fb{display:block}.orb .fb svg{width:100%;height:auto;max-height:62vh}
+.hero3d{cursor:grab}
+.vd{font:500 1.35rem/1.15 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.03em;margin:0;color:var(--ink)}
+.case-fg{display:grid;gap:8px;justify-items:end}.case-fg svg{width:100%;height:auto;max-height:52vh}.case-fg [hidden],.cstx[hidden]{display:none}
+.src{color:var(--mute);text-align:right;letter-spacing:.08em;text-transform:none;font-size:11px;line-height:1.4}
+.n{border-bottom:1px dotted var(--ink);cursor:pointer;position:relative}
+#note{position:fixed;left:50%;bottom:5vh;transform:translate(-50%,20px);max-width:440px;width:88vw;background:var(--paper);border:1px solid var(--ink);padding:20px 22px;font:400 14px/1.55 Manrope,sans-serif;opacity:0;pointer-events:none;transition:.3s;box-shadow:0 10px 30px rgba(28,25,20,.12);z-index:30}
+#note.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+#note h3{margin:0 0 4px;font:500 1.5rem/1 "Cormorant Garamond",serif;text-transform:uppercase;letter-spacing:.02em}
+#note .d{color:var(--mute);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:10px}
+footer a.ch{font:500 11px/1 Manrope,sans-serif;letter-spacing:.18em;text-transform:uppercase;padding:12px 0;color:var(--ink);text-decoration:none}
+footer a.ch[hidden],footer button[hidden]{display:none}
+#drawer .home{display:block;margin-top:18px;font:500 11px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--mute);text-decoration:none}
+header a{color:inherit;text-decoration:none}
+/* v2 hands-on pieces, unchanged, scoped */
+#ix{font:400 15px/1.5 Manrope,sans-serif;display:grid;gap:16px;min-width:0;width:100%}
+#ix svg{width:100%;height:auto;display:block}
+#ix label{display:grid;gap:6px;font:500 12px/1.2 Manrope,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#ix button{font:400 15px/1.3 Manrope,sans-serif;text-align:left;border:1px solid var(--rule);padding:12px 15px;border-radius:2px}
+#ix button:hover{border-color:var(--ink)}#ix button.on{border-color:var(--ink);background:rgba(28,25,20,.04)}
+#ix .q{font:500 15px/1.4 Manrope,sans-serif;margin:0 0 14px}#ix .guesses{display:flex;flex-direction:column;gap:10px}
+#ix .trial{font:400 15px/1.5 Manrope,sans-serif;min-height:120px;margin:0;max-width:none}
+#ix .verdict{margin-top:16px;font:500 13px/1 Manrope,sans-serif;letter-spacing:.16em;text-transform:uppercase;opacity:0;transition:.4s}#ix .verdict.show{opacity:1}
+.ctl{display:grid;gap:8px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+#ix .row{display:flex;flex-wrap:wrap;gap:10px}.out{margin:0;min-height:1.5em}.big{font:500 2rem/1.1 "Cormorant Garamond",serif;letter-spacing:.06em;margin:0}
+#ix .bar{height:3px;background:var(--rule);flex:none;display:block}#ix .bar i{display:block;height:3px;background:var(--ink);width:0;transition:width .4s}
+.rooms{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}.rooms li{border:1px solid var(--rule);padding:8px;display:grid;font-size:13px}.rooms b{font-weight:500;font-size:11px;color:var(--mute)}
+.voters{display:grid;gap:8px}.voters div{display:grid;grid-template-columns:5.5em 1fr auto;align-items:center;gap:10px}.voters b{font-weight:500}#ix .voters button{padding:8px 12px;font-size:13px}
+.rec{margin:0;padding:0;list-style:none;display:grid;gap:6px}.rec li{display:grid;grid-template-columns:5.5em 1fr;gap:10px;padding:6px 0;border-bottom:1px solid var(--rule)}.rec .who{color:var(--mute);font-size:12px;letter-spacing:.1em;text-transform:uppercase}.rec b{font-weight:500;text-decoration:underline}
+.lin{margin:0;padding-left:1.4em;font-family:ui-monospace,Menlo,monospace;letter-spacing:.12em}.lin b{text-decoration:underline}
+.doors{display:flex;gap:8px;flex-wrap:wrap}.doors svg{width:30px}
+.stamp{display:inline-block;justify-self:start;border:2px solid var(--ink);padding:8px 14px;font:500 13px/1 Manrope,sans-serif;letter-spacing:.2em;text-transform:uppercase}
+#ix button.pic{padding:6px;justify-self:start}#ix button.pic svg{width:160px}button:disabled{opacity:.35;cursor:default}
+#ix .fig{cursor:pointer}
+button:focus-visible,a:focus-visible,.n:focus-visible,svg:focus-visible,#ix .fig:focus-visible,input:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+@media(max-width:820px){
+ #rail a.live{display:block}
+ input[type=range]{height:44px}#ix button,.opt,footer button,footer a.ch,#idx button,#rail .menu,.begin,#drawer .x,#drawer li a,#drawer .home,.toggle button{min-height:44px;min-width:44px}
+ .s3d .arg{gap:10px}.s3d .arg .kick{display:none}.s3d .arg>p.c:not(.vd-c){order:9}
+ .s3d .orb,.s3d .orb .fb svg{max-height:34vh;margin:0 auto}.s3d .orb{width:auto;max-width:100%}
+ .s1h .arg{order:-1}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+/* real 44px boxes, layout unchanged: padding grows the box, an equal negative margin gives the space back */
+#drawer li a{display:grid;grid-column:1/-1;grid-template-columns:28px 1fr;padding:11px 0;margin:-2px 0}#drawer li{padding:0}
+#drawer .x{width:44px;height:44px;display:grid;place-items:center;margin:-12px -14px 0 0}
+#drawer .home{padding:17px 0;margin:1px 0 -17px}
+.n{border-bottom:0;padding:12px 6px;margin:0 -6px;min-width:44px;min-height:44px}.n::before{content:'';position:absolute;left:6px;right:6px;bottom:11px;border-bottom:1px dotted var(--ink);pointer-events:none}
+.begin{position:relative;border-color:transparent;border-width:0;padding:16px 19px;margin-block:-1px}.begin::before{content:'';position:absolute;inset:1px 0;border:1px solid var(--ink);pointer-events:none}
+.toggle button{padding-top:16.5px;padding-bottom:16.5px;margin-block:-3.5px}.toggle button.on{background:linear-gradient(var(--ink),var(--ink)) center/100% calc(100% - 7px) no-repeat}
+footer a.ch{padding-left:7px;padding-right:7px;margin-inline:-7px}footer a#nc{text-align:right}
+@media(max-width:820px){#rail .menu{width:44px;min-width:44px;flex:none;margin:0 -6px}#rail a.live{padding-top:16.5px;padding-bottom:16.5px;margin-block:-11.5px}#rail a.live:before{top:13.5px;bottom:13.5px}#idx button{padding-left:15px;padding-right:15px;margin-inline:-5px}#idx button.on{border-color:transparent;background:linear-gradient(var(--ink),var(--ink)) bottom center/calc(100% - 10px) 1px no-repeat;background-origin:border-box}}
+/* 44px hit areas without visual change */
+
+header{position:relative;z-index:2}
+.begin,#rail .menu,#idx button,.people .opt,footer a.ch,footer button,#cs .opt,.n{position:relative}
+.begin::after,#rail .menu::after,#idx button::after,.people .opt::after,footer a.ch::after,footer button::after,#cs .opt::after{content:'';position:absolute;left:50%;top:50%;width:max(100%,48px);height:max(100%,48px);transform:translate(-50%,-50%)}
+/* short landscape: phone pattern, current chapter + 44px menu, drawer navigates */
+@media(max-height:500px) and (min-width:821px){#rail a:not(.live){display:none}#rail .menu{width:44px;height:44px;flex:none;margin:-6px 0 -4px}#rail .menu::after{display:none}#rail .menu:focus-visible{outline:0}#rail .menu:focus-visible::after{display:block;width:32px;height:32px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}#rail a.live{padding:17px 0}#rail a.live:before{top:14px;bottom:14px}#rail a.live:focus-visible{outline:0}#rail a.live:focus-visible::after{content:"";position:absolute;left:0;right:0;top:12px;bottom:12px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}}
+/* tap pass 2: 44px hit areas at 821px and wider (layout unchanged except ch-13 voter buttons, 35px to 44px tall as on phones) */
+header .t a{position:relative}header .t a::after{content:"";position:absolute;left:0;right:0;top:50%;height:48px;transform:translateY(-50%)}
+@media(min-width:821px){input[type=range]{height:44px;margin:-8px 0;vertical-align:-8px}#ix .voters button{min-height:44px}}
+/* touch screens 821px and wider: same rail as short landscape (current chapter + 44px menu, drawer navigates) */
+@media(pointer:coarse) and (min-width:821px){#rail a:not(.live){display:none}#rail .menu{width:44px;height:44px;flex:none;margin:-6px 0 -4px}#rail .menu::after{display:none}#rail .menu:focus-visible{outline:0}#rail .menu:focus-visible::after{display:block;width:32px;height:32px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}#rail a.live{padding:17px 0}#rail a.live:before{top:14px;bottom:14px}#rail a.live:focus-visible{outline:0}#rail a.live:focus-visible::after{content:"";position:absolute;left:0;right:0;top:12px;bottom:12px;outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}}
+/* tap pass 3 (Steve 18 Oct): drawer rows are full 44px hit boxes with no overlap (the row rule moves onto the link); desktop rail links get a 24px-tall hit area, no visual change */
+#drawer li{border-bottom:0}#drawer li a{margin:0;min-height:44px;border-bottom:1px solid var(--rule)}
+@media(min-width:821px) and (min-height:501px) and (pointer:fine){#rail a{position:relative}#rail a::after{content:"";position:absolute;left:0;right:0;top:-2px;bottom:-2px}}
+/* tap pass 4 (QC 17743d81 P1, Steve: inline terms exempt from 44px, no overlap): a term's hit padding is clipped at the midpoint to any neighbouring term (set by the nfit script below via --nt/--nr/--nb/--nl; r5: the vertical defaults are 0, so stacked terms don't overlap before the first fit; the horizontal 6px stays, because a 0 inline padding lets Chromium kern the term into the word before it and the glyphs would shift 1px); text layout, underline and focus ring stay where they were */
+.n{padding:var(--nt,0px) var(--nr,6px) var(--nb,0px) var(--nl,6px);margin:0 calc(-1*var(--nr,6px)) 0 calc(-1*var(--nl,6px))}
+.n::before{bottom:calc(var(--nb,0px) - 1px);left:var(--nl,6px);right:var(--nr,6px)}
+.n:not(.nm):focus-visible{outline:0}
+.n:not(.nm):focus-visible::after{content:"";position:absolute;top:calc(var(--nt,0px) - 12px);bottom:calc(var(--nb,0px) - 12px);left:calc(var(--nl,6px) - 6px);right:calc(var(--nr,6px) - 6px);outline:2px solid var(--ink);outline-offset:3px;pointer-events:none}
+/* found by the full sweep: at 821px+ the header title's 48px hit area (rule2) overlapped the section-index buttons' 48px hit areas by ~11px; split at the midpoint (title 44px tall, index buttons 45px) */
+@media(min-width:821px){header .t a::after{top:-20px;bottom:-9px;height:auto;transform:none}#idx button::after{top:-9px;bottom:-12px;height:auto;transform:translateX(-50%)}}
+/* found by the full sweep: at short landscape the "Begin" button's 48px hit area reached 1.7px into the footer link's; the button is already 44px tall, so its hit area is just its box */
+.begin::after{height:max(100%,44px)}
+/* r6 (QC f193bd40 P2): restored from 1f17. The footer is sticky at 820px and narrower in every chapter, so anything scrolled into view (including keyboard focus) stops above it (footer 71px + 8px). ch-07's #pad keeps its own scroll-margin as well */
+@media(max-width:820px){html{scroll-padding-bottom:79px}}
+</style></head><body>
+<nav id="rail" aria-label="Chapters">
+<button class="menu" id="menuBtn" aria-label="All chapters" aria-expanded="false"><i></i></button>
+<a href="ch-01.html" title="1 · The Reach of Explanations"><span class="rn">01</span><span class="rt"></span></a><a href="ch-02.html" title="2 · Closer to Reality"><span class="rn">02</span><span class="rt"></span></a><a href="ch-03.html" title="3 · The Spark"><span class="rn">03</span><span class="rt"></span></a><a href="ch-04.html" title="4 · Creation"><span class="rn">04</span><span class="rt"></span></a><a href="ch-05.html" title="5 · The Reality of Abstractions"><span class="rn">05</span><span class="rt"></span></a><a href="ch-06.html" title="6 · The Jump to Universality"><span class="rn">06</span><span class="rt"></span></a><a href="ch-07.html" title="7 · Artificial Creativity"><span class="rn">07</span><span class="rt"></span></a><a href="ch-08.html" title="8 · A Window on Infinity"><span class="rn">08</span><span class="rt"></span></a><a href="ch-09.html" title="9 · Optimism"><span class="rn">09</span><span class="rt"></span></a><a href="ch-10.html" title="10 · A Dream of Socrates"><span class="rn">10</span><span class="rt"></span></a><a href="ch-11.html" title="11 · The Multiverse"><span class="rn">11</span><span class="rt"></span></a><a href="ch-12.html" title="12 · A Physicist&#x27;s History of Bad Philosophy"><span class="rn">12</span><span class="rt"></span></a><a href="ch-13.html" class=live aria-current=page title="13 · Choices"><span class="rn">13</span><span class="rt">Choices</span></a><a href="ch-14.html" title="14 · Why Are Flowers Beautiful?"><span class="rn">14</span><span class="rt"></span></a><a href="ch-15.html" title="15 · The Evolution of Culture"><span class="rn">15</span><span class="rt"></span></a><a href="ch-16.html" title="16 · The Evolution of Creativity"><span class="rn">16</span><span class="rt"></span></a><a href="ch-17.html" title="17 · Unsustainable"><span class="rn">17</span><span class="rt"></span></a><a href="ch-18.html" title="18 · The Beginning"><span class="rn">18</span><span class="rt"></span></a>
+</nav>
+<div id="scrim"></div>
+<aside id="drawer" aria-label="All chapters"><button class="x" id="closeBtn" aria-label="Close">×</button><div class="sm kick">The Beginning of Infinity</div><ol><li class=""><a href="ch-01.html"><b>01</b><span>The Reach of Explanations</span></a></li><li class=""><a href="ch-02.html"><b>02</b><span>Closer to Reality</span></a></li><li class=""><a href="ch-03.html"><b>03</b><span>The Spark</span></a></li><li class=""><a href="ch-04.html"><b>04</b><span>Creation</span></a></li><li class=""><a href="ch-05.html"><b>05</b><span>The Reality of Abstractions</span></a></li><li class=""><a href="ch-06.html"><b>06</b><span>The Jump to Universality</span></a></li><li class=""><a href="ch-07.html"><b>07</b><span>Artificial Creativity</span></a></li><li class=""><a href="ch-08.html"><b>08</b><span>A Window on Infinity</span></a></li><li class=""><a href="ch-09.html"><b>09</b><span>Optimism</span></a></li><li class=""><a href="ch-10.html"><b>10</b><span>A Dream of Socrates</span></a></li><li class=""><a href="ch-11.html"><b>11</b><span>The Multiverse</span></a></li><li class=""><a href="ch-12.html"><b>12</b><span>A Physicist&#x27;s History of Bad Philosophy</span></a></li><li class="live"><a href="ch-13.html"><b>13</b><span>Choices</span></a></li><li class=""><a href="ch-14.html"><b>14</b><span>Why Are Flowers Beautiful?</span></a></li><li class=""><a href="ch-15.html"><b>15</b><span>The Evolution of Culture</span></a></li><li class=""><a href="ch-16.html"><b>16</b><span>The Evolution of Creativity</span></a></li><li class=""><a href="ch-17.html"><b>17</b><span>Unsustainable</span></a></li><li class=""><a href="ch-18.html"><b>18</b><span>The Beginning</span></a></li></ol><a class="home" href="index.html">← The scroll</a></aside>
+<header><div class="sm t"><a href="index.html">The Beginning of Infinity</a> · Chapter 13 · Choices</div>
+<ol id="idx"></ol></header>
+<main>
+<section class="sec s1h s3d" id="s1" data-t="The idea">
+<div class="arg"><div class="sm kick">Chapter 13 · Choices</div><h1><span>Vote them out</span><span>without blood</span></h1><p class="c" id="vd">Voting can&#x27;t add up what everyone wants; elections exist to remove bad rulers without violence.</p><button class="begin" data-go="2">Begin →</button></div>
+<div class="fg"><div class="orb hero3d" id="orb" data-kind="hero"><div class="fb"><svg role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 420" fill="none" stroke="#1c1914" stroke-linecap="round" stroke-linejoin="round" aria-label="A figure stepping off a plinth beside an empty one"><path d="M90 380V260H230V380M330 380V260H470V380M80 260H240M320 260H480M70 380H490" stroke-width="1.5"/><clipPath id="h13-c13a"><rect x="90" y="260" width="140" height="120"/></clipPath><g clip-path="url(#h13-c13a)" stroke-width="0.5" opacity="0.55"><path d="M160.0 186.8L293.2 320.0"/><path d="M157.2 189.6L290.4 322.8"/><path d="M154.3 192.4L287.6 325.7"/><path d="M151.5 195.3L284.7 328.5"/><path d="M148.7 198.1L281.9 331.3"/><path d="M145.9 200.9L279.1 334.1"/><path d="M143.0 203.8L276.2 337.0"/><path d="M140.2 206.6L273.4 339.8"/><path d="M137.4 209.4L270.6 342.6"/><path d="M134.5 212.2L267.8 345.5"/><path d="M131.7 215.1L264.9 348.3"/><path d="M128.9 217.9L262.1 351.1"/><path d="M126.1 220.7L259.3 353.9"/><path d="M123.2 223.6L256.4 356.8"/><path d="M120.4 226.4L253.6 359.6"/><path d="M117.6 229.2L250.8 362.4"/><path d="M114.7 232.0L248.0 365.3"/><path d="M111.9 234.9L245.1 368.1"/><path d="M109.1 237.7L242.3 370.9"/><path d="M106.3 240.5L239.5 373.7"/><path d="M103.4 243.4L236.6 376.6"/><path d="M100.6 246.2L233.8 379.4"/><path d="M97.8 249.0L231.0 382.2"/><path d="M94.9 251.8L228.2 385.1"/><path d="M92.1 254.7L225.3 387.9"/><path d="M89.3 257.5L222.5 390.7"/><path d="M86.5 260.3L219.7 393.5"/><path d="M83.6 263.2L216.8 396.4"/><path d="M80.8 266.0L214.0 399.2"/><path d="M78.0 268.8L211.2 402.0"/><path d="M75.1 271.6L208.4 404.9"/><path d="M72.3 274.5L205.5 407.7"/><path d="M69.5 277.3L202.7 410.5"/><path d="M66.7 280.1L199.9 413.3"/><path d="M63.8 283.0L197.0 416.2"/><path d="M61.0 285.8L194.2 419.0"/><path d="M58.2 288.6L191.4 421.8"/><path d="M55.3 291.4L188.6 424.7"/><path d="M52.5 294.3L185.7 427.5"/><path d="M49.7 297.1L182.9 430.3"/><path d="M46.9 299.9L180.1 433.1"/><path d="M44.0 302.8L177.2 436.0"/><path d="M41.2 305.6L174.4 438.8"/><path d="M38.4 308.4L171.6 441.6"/><path d="M35.5 311.2L168.8 444.5"/><path d="M32.7 314.1L165.9 447.3"/><path d="M29.9 316.9L163.1 450.1"/><path d="M27.1 319.7L160.3 452.9"/></g><clipPath id="h13-c13b"><rect x="330" y="260" width="140" height="120"/></clipPath><g clip-path="url(#h13-c13b)" stroke-width="0.5" opacity="0.55"><path d="M400.0 186.8L533.2 320.0"/><path d="M397.2 189.6L530.4 322.8"/><path d="M394.3 192.4L527.6 325.7"/><path d="M391.5 195.3L524.7 328.5"/><path d="M388.7 198.1L521.9 331.3"/><path d="M385.9 200.9L519.1 334.1"/><path d="M383.0 203.8L516.2 337.0"/><path d="M380.2 206.6L513.4 339.8"/><path d="M377.4 209.4L510.6 342.6"/><path d="M374.5 212.2L507.8 345.5"/><path d="M371.7 215.1L504.9 348.3"/><path d="M368.9 217.9L502.1 351.1"/><path d="M366.1 220.7L499.3 353.9"/><path d="M363.2 223.6L496.4 356.8"/><path d="M360.4 226.4L493.6 359.6"/><path d="M357.6 229.2L490.8 362.4"/><path d="M354.7 232.0L488.0 365.3"/><path d="M351.9 234.9L485.1 368.1"/><path d="M349.1 237.7L482.3 370.9"/><path d="M346.3 240.5L479.5 373.7"/><path d="M343.4 243.4L476.6 376.6"/><path d="M340.6 246.2L473.8 379.4"/><path d="M337.8 249.0L471.0 382.2"/><path d="M334.9 251.8L468.2 385.1"/><path d="M332.1 254.7L465.3 387.9"/><path d="M329.3 257.5L462.5 390.7"/><path d="M326.5 260.3L459.7 393.5"/><path d="M323.6 263.2L456.8 396.4"/><path d="M320.8 266.0L454.0 399.2"/><path d="M318.0 268.8L451.2 402.0"/><path d="M315.1 271.6L448.4 404.9"/><path d="M312.3 274.5L445.5 407.7"/><path d="M309.5 277.3L442.7 410.5"/><path d="M306.7 280.1L439.9 413.3"/><path d="M303.8 283.0L437.0 416.2"/><path d="M301.0 285.8L434.2 419.0"/><path d="M298.2 288.6L431.4 421.8"/><path d="M295.3 291.4L428.6 424.7"/><path d="M292.5 294.3L425.7 427.5"/><path d="M289.7 297.1L422.9 430.3"/><path d="M286.9 299.9L420.1 433.1"/><path d="M284.0 302.8L417.2 436.0"/><path d="M281.2 305.6L414.4 438.8"/><path d="M278.4 308.4L411.6 441.6"/><path d="M275.5 311.2L408.8 444.5"/><path d="M272.7 314.1L405.9 447.3"/><path d="M269.9 316.9L403.1 450.1"/><path d="M267.1 319.7L400.3 452.9"/></g><g transform="rotate(12 250 260)"><g stroke-width="1.5"><circle cx="250" cy="193.8" r="8.8"/><path d="M250 202.6V235.6M234.6 213.6L250 207.0L265.4 213.6M240.1 262L250 235.6L259.9 262"/></g></g><path d="M232 255q20 6 30 -2" stroke-width=".6" stroke-dasharray="1 3"/><path d="M400 258V150" stroke-width=".6" stroke-dasharray="1 5"/><text x="160" y="330" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle"></text><text x="400" y="140" font-family="Manrope,sans-serif" font-size="10" letter-spacing="1.5" fill="#1c1914" stroke="none" opacity=".55" text-anchor="middle">VACANT</text></svg></div></div></div>
+</section>
+<section class="sec " id="s2" data-t="How it works">
+<div class="arg"><div class="sm kick">How it works</div><h2><span>Three voters</span><span>no clear</span><span>will</span></h2><p class="c">Three people each rank three options. Swap their rankings and watch the group go round in a circle. Voting can&#x27;t add up what everyone wants. What it can do is remove a ruler.</p></div>
+<div class="fg"><div id="ix" data-state=""><div class="voters" id="vt"></div><p class="out" id="vr"></p>
+<div class="row" style="margin-top:14px"><button id="ko">Vote the ruler out</button></div><p class="out" id="ro">Ruler: in office.</p></div></div>
+</section>
+<section class="sec " id="s3" data-t="Real life">
+<div class="arg"><div class="sm kick">Real life</div><div class="opts row" id="cs"><button class="opt on" data-c="0" aria-pressed="true">The Alabama paradox</button><button class="opt" data-c="1" aria-pressed="false">Voting in circles</button></div><p class="c cstx" data-c="0"><b>The Alabama paradox.</b> After the 1880 census, adding one seat to the House would have cost Alabama a seat.</p><p class="c cstx" data-c="1" hidden><b>Voting in circles.</b> Three voters, three options, and the group prefers A to B, B to C, and C to A. This was noticed in the 1780s.</p></div>
+<div class="fg"><div class="case-fg" id="csF"><div data-c="0"><svg viewBox="0 0 160 120" fill="none" stroke="#1c1914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="The Alabama paradox"><path d="M14 96H150" stroke-width="1"/><path d="M14 96h4" stroke-width=".5"/><text x="12" y="98" text-anchor="end" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">0</text><path d="M14 60h4" stroke-width=".5"/><text x="12" y="62" text-anchor="end" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">4</text><path d="M14 24h4" stroke-width=".5"/><text x="12" y="26" text-anchor="end" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">8</text><path d="M55 96V24" stroke-width="20" stroke-linecap="butt" opacity=".8"/><text x="55" y="20" text-anchor="middle" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">8 SEATS</text><text x="55" y="105" text-anchor="middle" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">299-SEAT HOUSE</text><path d="M115 96V33" stroke-width="20" stroke-linecap="butt"/><text x="115" y="29" text-anchor="middle" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">7 SEATS</text><text x="115" y="105" text-anchor="middle" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">300-SEAT HOUSE</text><text x="84" y="116" text-anchor="middle" font-family="Manrope,sans-serif" font-size="6" fill="#1c1914" stroke="none">ALABAMA, 1880 CENSUS</text></svg><p class="src sm">Source: 1880 census, Hamilton&#x27;s method, via Wikipedia, “Apportionment paradox”.</p></div><div data-c="1" hidden><svg viewBox="0 0 160 120" fill="none" stroke="#1c1914" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Voting in circles"><circle cx="80" cy="60" r="34" stroke-width=".8"/><path d="M80 26l6-4M80 26l6 4M110 76l-7 1M110 76l2-7M50 76l1-7M50 76l7 1" stroke-width=".8"/></svg></div></div></div>
+</section>
+<section class="sec " id="s4" data-t="People">
+<div class="arg"><div class="sm kick">People in this chapter</div><div class="people" id="pp"><button class="opt on" data-n="arrow" aria-pressed="true">Arrow</button><button class="opt" data-n="balinski" aria-pressed="false">Balinski and Young</button><button class="opt" data-n="hamilton" aria-pressed="false">Hamilton</button><button class="opt" data-n="jefferson" aria-pressed="false">Jefferson</button><button class="opt" data-n="popper" aria-pressed="false">Popper</button></div></div>
+<div class="fg"><div class="card" id="card" aria-live="polite"><h3>Kenneth Arrow</h3><div class="d sm">1921–2017 · American economist</div><p>Proved in 1951 that no voting system meets every fairness rule at once.</p></div></div>
+</section>
+</main>
+<footer><a class="ch" id="pc" href="ch-12.html">← 12</a><button id="prev">← Previous</button><div class="prog" id="bar"></div><span class="cnt sm" id="cnt"></span><button id="next">Next →</button><a class="ch" id="nc" href="ch-14.html" hidden>14 →</a></footer>
+<div id="note" role="dialog" aria-live="polite"><h3></h3><div class="d"></div><p style="margin:0"></p></div>
+<script src="lib/three.min.js"></script>
+<script src="lib/engrave.js"></script>
+<script>
+
+const S=[...document.querySelectorAll('.sec')];let cur=0;
+const idx=document.getElementById('idx'),bar=document.getElementById('bar'),prev=document.getElementById('prev'),next=document.getElementById('next'),pc=document.getElementById('pc'),nc=document.getElementById('nc');
+S.forEach((s,i)=>{idx.insertAdjacentHTML('beforeend',`<li><button data-i="${i}"><em>${String(i+1).padStart(2,'0')}</em><span>${s.dataset.t}</span></button></li>`);bar.insertAdjacentHTML('beforeend','<i></i>')});
+function go(i){i=Math.max(0,Math.min(S.length-1,i));cur=i;
+ S.forEach((s,k)=>s.classList.toggle('on',k===i));
+ idx.querySelectorAll('button').forEach((b,k)=>{b.classList.toggle('on',k===i);b.setAttribute('aria-current',k===i?'step':'false')});
+ bar.querySelectorAll('i').forEach((b,k)=>b.classList.toggle('on',k===i));
+ document.getElementById('cnt').textContent=`${i+1} / ${S.length}`;
+ prev.hidden=i===0;pc.hidden=i!==0;next.hidden=i===S.length-1;nc.hidden=i!==S.length-1;
+ history.replaceState(null,'','#'+(i+1));window.scrollTo(0,0);
+ window.dispatchEvent(new CustomEvent('section',{detail:i}));}
+window.go=go;
+document.querySelectorAll('.n').forEach((e,i,a)=>e.style.zIndex=a.length-i);
+{let sx=null,sy=0;const M=document.querySelector('main');M.addEventListener('touchstart',e=>{const t=e.target;if(e.touches.length!==1||(t.closest&&t.closest('input,canvas,#ix,.orb,#note')))return sx=null;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+M.addEventListener('touchend',e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dy)<Math.abs(dx)*.6)go(cur+(dx<0?1:-1))},{passive:true});}
+prev.onclick=()=>{go(cur-1);(cur===0?pc:prev).focus()};next.onclick=()=>{go(cur+1);(cur===S.length-1?nc:next).focus()};
+idx.onclick=e=>{const b=e.target.closest('button');if(b)go(+b.dataset.i)};
+document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{go(+b.dataset.go-1);next.focus()});
+document.addEventListener('keydown',e=>{const t=e.target;if(t.closest&&t.closest('input,textarea,select,#ix,.orb,.opts,.people,#cs,[role=button]'))return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+const dr=document.getElementById('drawer'),sc=document.getElementById('scrim'),mb=document.getElementById('menuBtn');
+const dset=o=>{dr.classList.toggle('open',o);sc.classList.toggle('on',o);dr.inert=!o;mb.setAttribute('aria-expanded',o);(o?document.getElementById('closeBtn'):mb).focus()};dr.inert=true;
+mb.onclick=()=>dset(true);document.getElementById('closeBtn').onclick=()=>dset(false);sc.onclick=()=>dset(false);
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dr.classList.contains('open'))dset(false)});
+/* real life */
+const csB=document.querySelectorAll('#cs .opt');
+csB.forEach(b=>b.onclick=()=>{const c=b.dataset.c;csB.forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
+ document.querySelectorAll('#csF>[data-c],.cstx').forEach(e=>e.hidden=e.dataset.c!==c)});
+/* people + inline name cards */
+const N={"arrow": ["Kenneth Arrow", "1921–2017 · American economist", "Proved in 1951 that no voting system meets every fairness rule at once."], "balinski": ["Michel Balinski and H. Peyton Young", "1933–2019 and b. 1945", "Proved no fair way to share seats between states avoids paradoxes."], "hamilton": ["Alexander Hamilton and Thomas Jefferson", "1755/57–1804 and 1743–1826", "Each pushed a rule for splitting US House seats. Both had flaws."], "jefferson": ["Alexander Hamilton and Thomas Jefferson", "1755/57–1804 and 1743–1826", "Each pushed a rule for splitting US House seats. Both had flaws."], "popper": ["Karl Popper", "1902–1994 · Austrian-British philosopher", "The test of a government: can you remove bad rulers without blood?"]};
+const pp=document.getElementById('pp'),card=document.getElementById('card');
+pp.onclick=e=>{const b=e.target.closest('button');if(!b)return;pp.querySelectorAll('button').forEach(x=>{x.classList.toggle('on',x===b);x.setAttribute('aria-pressed',x===b)});
+ const[a,d,c]=N[b.dataset.n];card.children[0].textContent=a;card.children[1].textContent=d;card.children[2].textContent=c};
+const box=document.getElementById('note');
+function openN(s){const[a,b,c]=N[s.dataset.n];box.children[0].textContent=a;box.children[1].textContent=b;box.children[2].textContent=c;box.classList.add('show')}
+document.addEventListener('click',e=>{const s=e.target.closest('.n');if(s){e.stopPropagation();openN(s);return}if(!box.contains(e.target))box.classList.remove('show')});
+document.addEventListener('keydown',e=>{const s=e.target.closest&&e.target.closest('.n');if(s&&(e.key==='Enter'||e.key===' ')){e.preventDefault();openN(s)}if(e.key==='Escape')box.classList.remove('show')});
+
+const api=BOI3D(document.getElementById('orb'),'hero');
+{const $=s=>document.querySelector(s),ix=document.getElementById('ix'),RM=matchMedia('(prefers-reduced-motion: reduce)').matches;function st(v){ix.dataset.state=String(v)}
+const V=[['A','B','C'],['B','C','A'],['C','A','B']];
+function beats(x,y){return V.filter(r=>r.indexOf(x)<r.indexOf(y)).length}
+function up(){$('#vt').innerHTML=V.map((r,i)=>'<div><b>Voter '+(i+1)+'</b><span>'+r.join(' › ')+'</span><button data-i="'+i+'">Swap top two</button></div>').join('');
+document.querySelectorAll('#vt button').forEach(b=>b.onclick=()=>{const r=V[b.dataset.i];[r[0],r[1]]=[r[1],r[0]];up();document.querySelector('#vt button[data-i="'+b.dataset.i+'"]').focus()});
+const P=[['A','B'],['B','C'],['C','A']].map(([x,y])=>beats(x,y)>=2?[x,y]:[y,x]);const w={A:0,B:0,C:0};P.forEach(([x])=>w[x]++);const cyc=Object.values(w).every(v=>v===1);
+$('#vr').textContent=P.map(([x,y])=>x+' beats '+y).join(', ')+'. '+(cyc?'A circle. The group has no first choice.':'Group order: '+Object.keys(w).sort((a,b)=>w[b]-w[a]).join(' › ')+'.');st(V.map(r=>r.join('')).join('|')+':'+(cyc?'cycle':'order'));}
+let out=false;$('#ko').onclick=()=>{out=!out;$('#ro').textContent=out?'Ruler: voted out. No one was hurt.':'Ruler: in office.';$('#ko').textContent=out?'Elect a new one':'Vote the ruler out';ix.dataset.ruler=out?'out':'in';};up();}
+
+go(Math.max(0,(parseInt(location.hash.slice(1))||1)-1));
+</script>
+<script>/* r6 (QC f193bd40 P2, WebKit): WebKit doesn't scroll keyboard focus when the element is already inside the viewport, so scroll-padding never applies to a control already sitting behind the sticky footer (ch-04 §1 terms at 667x375). After keyboard focus, scroll just enough to clear the footer (its top - 8px), never past the element's own top. Focus from a pointer press, focus in the footer and focus in fixed layers (the drawer) never scroll. */
+(function(){var f=document.querySelector('footer');if(!f)return;var lp=-1e9;
+['pointerdown','pointerup','mousedown','mouseup','touchstart','touchend','click'].forEach(function(t){addEventListener(t,function(){lp=Date.now()},{capture:true,passive:true})});
+document.addEventListener('focusin',function(e){var el=e.target;if(!el||!el.getBoundingClientRect||Date.now()-lp<1000||f.contains(el))return;var kv=true;try{kv=el.matches(':focus-visible')}catch(x){}if(!kv)return;
+ requestAnimationFrame(function(){if(document.activeElement!==el)return;var s=getComputedStyle(f).position;if(s!=='sticky'&&s!=='fixed')return;
+  for(var a=el;a&&a!==document.body;a=a.parentElement)if(getComputedStyle(a).position==='fixed')return;
+  var r=el.getBoundingClientRect(),t=f.getBoundingClientRect().top-8;if(!r.height||r.bottom<=t+0.5)return;var d=Math.min(r.bottom-t,Math.max(0,r.top-8));
+  if(d>0.5)window.scrollTo({top:window.scrollY+d,left:window.scrollX,behavior:'instant'})})})})();</script>
+</body></html>

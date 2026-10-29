@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Beginning of Infinity</title>
+<style>@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-500.woff2) format("woff2")}@font-face{font-family:Manrope;font-style:normal;font-weight:400 500;font-display:swap;src:url(fonts/manrope-var.woff2) format("woff2")}</style>
+<style>
+  :root { --paper: #f3eee4; --ink: #1c1914; --mute: rgba(28,25,20,.32); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper); color: var(--ink); }
+  body { font-family: "Cormorant Garamond", Palatino, Georgia, serif; transition: background-color .9s ease, color .9s ease; }
+  body.dark { --paper: #1c1914; --ink: #f3eee4; --mute: rgba(243,238,228,.34); }
+  .beat {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: minmax(0,1.05fr) minmax(0,0.95fr);
+    align-items: center;
+    gap: 3vw;
+    padding: 9vh 7vw calc(92px + 7vh);
+  }
+  h1 { margin: 0; font-weight: 500; font-size: clamp(2.8rem, 6.2vw, 6.4rem); line-height: 0.9; letter-spacing: 0.015em; text-transform: uppercase; }
+  h1 span { display: block; white-space: nowrap; }
+  figure { margin: 0; }
+  figure svg { width: 100%; height: auto; display: block; color: var(--ink); transition: color .9s ease; }
+  .beat h1, .beat figure, .title > * { opacity: 0; transform: translateY(18px); transition: opacity 1s ease, transform 1s ease; }
+  .beat figure { transition-delay: .25s; }
+  .in h1, .in figure, .title.in > * { opacity: 1; transform: none; }
+  .years { position: fixed; left: 0; right: 0; bottom: 0; padding: 0 5vw 5vh; pointer-events: none; transition: opacity .6s ease; }
+  .years.gone { opacity: 0; }
+  .years svg { width: 100%; height: 92px; display: block; color: var(--ink); transition: color .9s ease; }
+  .years.ready .seg { transition: stroke-dashoffset 1.4s ease; }
+  .title { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 8vh 7vw; }
+  .title h2 { margin: 0; font-weight: 500; font-size: clamp(2.6rem, 6vw, 6rem); line-height: .95; letter-spacing: .015em; text-transform: uppercase; }
+  .title p { margin: 3vh 0 0; font: 400 13px/1.6 Manrope, system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
+  .title .by { margin-top: 6vh; font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.6rem; letter-spacing: .08em; color: var(--ink); text-transform: none; }
+  .contents { padding: 6vh 7vw 14vh; max-width: 1100px; margin: 0 auto; }
+  .contents h3 { margin: 0 0 4vh; font: 400 12px/1 Manrope, system-ui, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--mute); }
+  .contents ol { list-style: none; margin: 0; padding: 0; }
+  .contents a { display: grid; grid-template-columns: 3.2em 1fr 1fr; gap: 1.5em; align-items: baseline; padding: 14px 0; border-top: 1px solid var(--mute); color: var(--ink); text-decoration: none; }
+  .contents b { font: 400 12px/1 Manrope, system-ui, sans-serif; letter-spacing: .18em; color: var(--mute); }
+  .contents .t { font-size: 1.35rem; }
+  .contents .c { font: 400 11px/1.5 Manrope, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+  .contents a:hover .c { color: var(--ink); }
+  @media (max-width: 800px) {
+    .beat { grid-template-columns: 1fr; padding: 6vh 6vw calc(70px + 6vh); }
+    .contents a { grid-template-columns: 2.6em 1fr; } .contents .c { grid-column: 2; }
+    .years svg { height: 64px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    body, figure svg, .years svg, .years, .years .seg { transition: none !important; }
+    .beat h1, .beat figure, .title > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+<section class="beat" data-beat="1">
+  <h1><span>Any myth</span><span>will do</span><span>so nothing</span><span>improves</span></h1>
+  <figure aria-label="Three stories, equal, none of them building on the last">
+      <svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="70" cy="170" r="34" />
+        <path d="M70 118 v-18 M70 222 v18 M18 170 h-18 M122 170 h18 M34 134 l-13 -13 M106 134 l13 -13 M34 206 l-13 13 M106 206 l13 13" />
+        <path d="M214 188 c28 -36 62 -36 90 0 c-28 10 -62 10 -90 0" />
+        <path d="M214 188 l-18 16 18 14" />
+        <circle cx="286" cy="176" r="2" fill="currentColor" stroke="none" />
+        <circle cx="430" cy="118" r="16" />
+        <path d="M430 134 v78 M430 158 h34 M404 246 l26 -34 26 34" />
+        <path d="M458 96 l22 86" />
+      </svg>
+    </figure>
+</section>
+<section class="beat" data-beat="2">
+  <h1><span>They asked</span><span>why</span><span>they were</span><span>cut down</span></h1>
+  <figure aria-label="Two columns, each topped with a question, each cut through.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M110 330 V170 M160 330 V170 M96 170 H174 M96 330 H174"/><path d="M135 150 C135 120 160 120 160 104 C160 86 112 86 112 104"/><path d="M80 250 L190 230"/><path d="M330 330 V170 M380 330 V170 M316 170 H394 M316 330 H394"/><path d="M355 150 C355 120 380 120 380 104 C380 86 332 86 332 104"/><path d="M300 260 L410 240"/><circle cx="135" cy="165" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="beat" data-beat="3">
+  <h1><span>The third</span><span>time</span><span>it held</span></h1>
+  <figure aria-label="A bridge of three arches; the third one stands and the road runs on past it.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M30 200 H490"/><path d="M60 330 C60 260 140 260 140 300" stroke-dasharray="2 9"/><path d="M170 330 C170 270 240 270 240 300" stroke-dasharray="2 9"/><path d="M280 330 V260 C280 210 380 210 380 260 V330"/><path d="M280 260 V200 M380 260 V200"/><path d="M380 200 H490"/><circle cx="490" cy="200" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="beat" data-beat="4">
+  <h1><span>An alphabet</span><span>can say</span><span>anything</span></h1>
+  <figure aria-label="A few letter strokes open into an endless written line.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M50 260 L80 160 L110 260 M62 222 H98"/><path d="M140 160 V260 C190 260 190 210 140 210 C185 210 185 160 140 160"/><path d="M270 180 C240 160 210 180 210 210 C210 245 245 260 270 240"/><path d="M300 210 C330 190 350 230 380 210 C410 190 430 230 460 210 C480 196 490 205 500 210" /><circle cx="500" cy="210" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="beat" data-beat="5" data-dark>
+  <h1><span>One planet</span><span>is not a</span><span>reason</span><span>to stop</span></h1>
+  <figure aria-label="A single small planet with a figure stepping off it.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<circle cx="200" cy="230" r="90"/><path d="M110 230 C150 250 250 250 290 230" stroke-dasharray="2 9"/><circle cx="276" cy="112" r="10"/><path d="M276 122 v36 M260 136 h32 M262 184 l14 -26 18 20"/><path d="M300 130 C360 110 420 80 480 40" stroke-dasharray="2 9"/><circle cx="480" cy="40" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="beat" data-beat="6" data-dark>
+  <h1><span>Malthus</span><span>forgot</span><span>new ideas</span></h1>
+  <figure aria-label="A forecast falling off a line, while a new idea lifts the real line above it.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M40 300 H480 M40 300 V40"/><path d="M60 150 C200 150 300 200 460 290" stroke-dasharray="2 9"/><path d="M60 150 C200 150 280 120 460 60"/><path d="M300 210 v-30 M286 194 l14 -14 14 14"/><circle cx="460" cy="60" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="beat" data-beat="7" data-dark>
+  <h1><span>No ceiling</span><span>we are at</span><span>the</span><span>beginning</span></h1>
+  <figure aria-label="A line climbs through an open ceiling and keeps going.">
+<svg viewBox="0 0 520 360" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+<path d="M40 120 H200 M320 120 H480"/><path d="M60 340 C160 330 220 260 250 190 C270 140 270 80 300 20"/><circle cx="300" cy="20" r="5" fill="currentColor" stroke="none"/>
+</svg></figure>
+</section>
+<section class="title" data-beat="8" data-dark>
+  <h2>The Beginning<br />of Infinity</h2>
+  <p>Explanations That Transform the World</p>
+  <p class="by">David Deutsch</p>
+</section>
+<section class="contents" data-beat="9" data-dark aria-label="Chapters">
+  <h3>Eighteen chapters</h3>
+  <ol><li><a href="ch-01.html"><b>01</b><span class="t">The Reach of Explanations</span><span class="c">Hard to vary / reaches far</span></a></li><li><a href="ch-02.html"><b>02</b><span class="t">Closer to Reality</span><span class="c">We see / through / theories</span></a></li><li><a href="ch-03.html"><b>03</b><span class="t">The Spark</span><span class="c">Not scum / the spark</span></a></li><li><a href="ch-04.html"><b>04</b><span class="t">Creation</span><span class="c">Design / without / a designer</span></a></li><li><a href="ch-05.html"><b>05</b><span class="t">The Reality of Abstractions</span><span class="c">Ideas are real / they cause / things</span></a></li><li><a href="ch-06.html"><b>06</b><span class="t">The Jump to Universality</span><span class="c">Step by step / then no limit</span></a></li><li><a href="ch-07.html"><b>07</b><span class="t">Artificial Creativity</span><span class="c">Passing a test / is not thinking</span></a></li><li><a href="ch-08.html"><b>08</b><span class="t">A Window on Infinity</span><span class="c">Infinity / is not a wall</span></a></li><li><a href="ch-09.html"><b>09</b><span class="t">Optimism</span><span class="c">Problems are / inevitable / problems are / soluble</span></a></li><li><a href="ch-10.html"><b>10</b><span class="t">A Dream of Socrates</span><span class="c">No authority / not even a god</span></a></li><li><a href="ch-11.html"><b>11</b><span class="t">The Multiverse</span><span class="c">The weirdness / is the reach</span></a></li><li><a href="ch-12.html"><b>12</b><span class="t">A Physicist&#x27;s History of Bad Philosophy</span><span class="c">Bad philosophy / forbids asking</span></a></li><li><a href="ch-13.html"><b>13</b><span class="t">Choices</span><span class="c">Vote them out / without blood</span></a></li><li><a href="ch-14.html"><b>14</b><span class="t">Why Are Flowers Beautiful?</span><span class="c">Beauty / is real</span></a></li><li><a href="ch-15.html"><b>15</b><span class="t">The Evolution of Culture</span><span class="c">Static societies / silence critics</span></a></li><li><a href="ch-16.html"><b>16</b><span class="t">The Evolution of Creativity</span><span class="c">First we copied / then we / broke out</span></a></li><li><a href="ch-17.html"><b>17</b><span class="t">Unsustainable</span><span class="c">Standing still / is the crisis</span></a></li><li><a href="ch-18.html"><b>18</b><span class="t">The Beginning</span><span class="c">Always / at the / beginning</span></a></li></ol>
+</section>
+<div class="years" aria-hidden="true">
+  <svg viewBox="0 0 1200 96" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <path class="seg" data-from="1" d="M16 78 H560" />
+    <circle class="seg-dot" cx="132" cy="78" r="5" fill="currentColor" stroke="none" />
+    <path class="seg" data-from="2" d="M560 78 H640 L652 30 L664 78 H740 L752 22 L764 78 H860" />
+    <path class="seg" data-from="3" d="M860 78 H900 C930 78 940 62 960 58" />
+    <path class="seg" data-from="4" d="M960 58 C1000 52 1020 44 1050 36" />
+    <path class="seg" data-from="5" d="M1050 36 C1080 30 1100 24 1120 18" />
+    <path class="seg" data-from="6" d="M1120 18 C1140 14 1160 10 1184 6" />
+  </svg>
+</div>
+<script>
+(function () {
+  var segs = [].slice.call(document.querySelectorAll('.years .seg'));
+  segs.forEach(function (p) { var L = Math.ceil(p.getTotalLength()) + 2; p.style.strokeDasharray = L; p.style.strokeDashoffset = L; p.dataset.len = L; });
+  var years = document.querySelector('.years');
+  var cur = 0;
+  function setBeat(n) {
+    if (n === cur) return; cur = n;
+    document.body.dataset.beat = n;
+    document.body.classList.toggle('dark', n >= 5);
+    years.classList.toggle('gone', n >= 8);
+    segs.forEach(function (p) { p.style.strokeDashoffset = n >= +p.dataset.from ? 0 : p.dataset.len; });
+  }
+  var secs = [].slice.call(document.querySelectorAll('[data-beat]')).filter(function (s) { return s.tagName === 'SECTION'; });
+  function pick() {
+    var mid = window.innerHeight / 2, best = 1;
+    secs.forEach(function (s) { if (s.getBoundingClientRect().top <= mid) best = +s.dataset.beat; });
+    setBeat(best);
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('in'); }); }, { threshold: 0.25 });
+    secs.forEach(function (s) { io.observe(s); });
+  } else secs.forEach(function (s) { s.classList.add('in'); });
+  window.addEventListener('scroll', pick, { passive: true });
+  window.addEventListener('resize', pick);
+  pick();
+  requestAnimationFrame(function () { requestAnimationFrame(function () { years.classList.add('ready'); }); });
+})();
+</script>
+</body>
+</html>
